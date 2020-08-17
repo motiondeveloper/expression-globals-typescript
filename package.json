@@ -14,8 +14,9 @@
     "publish": "npm run build && np"
   },
   "devDependencies": {
-    "rollup": "^2.23.0",
     "@rollup/plugin-typescript": "^5.0.2",
+    "rollup": "^2.23.0",
+    "tslib": "^2.0.1",
     "typescript": "^3.9.7"
   },
   "repository": {

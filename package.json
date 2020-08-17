@@ -1,0 +1,36 @@
+{
+  "name": "expression-globals-typescript",
+  "version": "1.0.0",
+  "description": "A library providing types for expressions, as well as for mocking the API (such as thisLayer and comp()) ",
+  "main": "dist/expression-globals-typescript.cjs.js",
+  "module": "dist/expression-globals-typescript.es.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "echo \"Error: no test specified\"",
+    "publish": "npm run build && np"
+  },
+  "devDependencies": {
+    "rollup": "^2.23.0",
+    "@rollup/plugin-typescript": "^5.0.2",
+    "typescript": "^3.9.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timhaywood/expression-globals-typescript.git"
+  },
+  "keywords": [
+    "expressions",
+    "typescript",
+    "after-effects"
+  ],
+  "author": "Tim Haywood",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/timhaywood/expression-globals-typescript/issues"
+  },
+  "homepage": "https://github.com/timhaywood/expression-globals-typescript#readme"
+}

@@ -11,7 +11,7 @@
   "scripts": {
     "build": "rollup -c && cp src/types.d.ts dist/index.d.ts",
     "test": "echo \"Error: no test specified\"",
-    "publish": "npm run build && np"
+    "release": "npm run build && np"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^5.0.2",

@@ -1,4 +1,4 @@
-/// <reference path="./index.d.ts" />
+/// <reference path="./types.d.ts" />
 
 // Global objects, attributes, and methods
 export const PathBase: PathValue = {};

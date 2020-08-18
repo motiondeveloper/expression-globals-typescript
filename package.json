@@ -2,21 +2,14 @@
   "name": "expression-globals-typescript",
   "version": "1.0.2",
   "description": "A library providing types for expressions, as well as for mocking the API (such as thisLayer and comp()) ",
-  "main": "dist/expression-globals-typescript.cjs.js",
-  "module": "dist/expression-globals-typescript.es.js",
-  "files": [
-    "dist"
-  ],
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rollup -c && cp src/types.d.ts dist/index.d.ts",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\"",
     "release": "npm run build && np"
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "^5.0.2",
-    "rollup": "^2.23.0",
-    "tslib": "^2.0.1",
     "typescript": "^3.9.7"
   },
   "repository": {

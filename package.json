@@ -1,6 +1,6 @@
 {
   "name": "expression-globals-typescript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A library providing types for expressions, as well as for mocking the API (such as thisLayer and comp()) ",
   "main": "dist/expression-globals-typescript.cjs.js",
   "module": "dist/expression-globals-typescript.es.js",

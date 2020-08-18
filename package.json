@@ -7,9 +7,9 @@
   "files": [
     "dist"
   ],
-  "types": "dist/expression-globals-typescript.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rollup -c && cp src/types.d.ts dist/expression-globals-typescript.d.ts",
+    "build": "rollup -c && cp src/types.d.ts dist/index.d.ts",
     "test": "echo \"Error: no test specified\"",
     "publish": "npm run build && np"
   },

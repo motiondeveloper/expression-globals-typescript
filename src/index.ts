@@ -1,16 +1,16 @@
-type Points = Vector2D[];
-type Vector = [number, number, number?];
-type Vector2D = [number, number];
-type Vector3D = [number, number, number];
-type Color = [number, number, number, number];
-interface PathValue {}
+export type Points = Vector2D[];
+export type Vector = [number, number, number?];
+export type Vector2D = [number, number];
+export type Vector3D = [number, number, number];
+export type Color = [number, number, number, number];
+export interface PathValue {}
 
-type SourceData = any[];
+export type SourceData = any[];
 
 // Global objects, attributes, and methods
 export const PathBase: PathValue = {};
 
-interface Key {
+export interface Key {
   value: Value;
   time: number;
 }
@@ -26,7 +26,7 @@ export const PointsBase: Vector2D[] = [
   [0, 100],
 ];
 
-interface Project {
+export interface Project {
   readonly fullPath: string;
   readonly bitsPerChannel: "8" | "16" | "32";
   readonly linearBlending: boolean;
@@ -38,11 +38,11 @@ export const ProjectBase: Project = {
   linearBlending: true,
 };
 
-interface MarkerParam {
+export interface MarkerParam {
   [id: string]: any;
 }
 
-interface Marker {
+export interface Marker {
   readonly time: number;
   readonly index: number;
   readonly duration: number;
@@ -56,13 +56,13 @@ interface Marker {
   readonly protectedRegion: boolean;
 }
 
-interface MarkerProperty {
+export interface MarkerProperty {
   readonly numKeys: number;
   key(index: number | string): Marker;
   nearestKey(t: number): Marker;
 }
 
-interface Comp {
+export interface Comp {
   readonly name: string;
   readonly numLayers: number;
   readonly activeCamera: Camera | null;
@@ -97,7 +97,7 @@ export const CompBase: Comp = {
   layer: (indexOrOtherLayer, relIndex) => LayerBase,
 };
 
-interface PropertyGroup {
+export interface PropertyGroup {
   readonly name: string;
 }
 
@@ -105,7 +105,7 @@ export const PropertyGroupBase: PropertyGroup = {
   name: "property group base",
 };
 
-type Value =
+export type Value =
   | number
   | Vector
   | Vector2D
@@ -117,7 +117,7 @@ type Value =
 
 export const ValueBase: Value = 1;
 
-interface Property {
+export interface Property {
   readonly value: Value;
   readonly name: string;
   readonly velocity: number | [];
@@ -156,7 +156,7 @@ interface Property {
   propertyGroup(countUp: number): PropertyGroup;
 }
 
-interface PathProperty extends Property {
+export interface PathProperty extends Property {
   points(time?: number): Vector2D[];
   inTangents(time?: number): Vector2D[];
   outTangents(time?: number): Vector2D[];
@@ -166,7 +166,7 @@ interface PathProperty extends Property {
   normalOnPath(percentage?: number, time?: number): Vector2D;
 }
 
-type loopType = "cycle" | "pingpong" | "offset" | "continue";
+export type loopType = "cycle" | "pingpong" | "offset" | "continue";
 
 export const PropertyBase: PathProperty = {
   value: "property base string value",
@@ -199,7 +199,7 @@ export const PropertyBase: PathProperty = {
   normalOnPath: (percentage = 0.5, t = time) => [0, 0],
 };
 
-interface Transform extends PropertyGroup {
+export interface Transform extends PropertyGroup {
   anchorPoint: Property;
   position: Property;
   scale: Property;
@@ -208,7 +208,7 @@ interface Transform extends PropertyGroup {
   rotationX?: Property;
 }
 
-const TransformBase: Transform = {
+export const TransformBase: Transform = {
   name: "Transform",
   anchorPoint: PropertyBase,
   position: PropertyBase,
@@ -218,7 +218,7 @@ const TransformBase: Transform = {
   rotationX: PropertyBase,
 };
 
-interface MaterialOptions extends PropertyGroup {
+export interface MaterialOptions extends PropertyGroup {
   lightTransmission: Property;
   castShadows: Property;
   acceptsShadows: Property;
@@ -230,7 +230,7 @@ interface MaterialOptions extends PropertyGroup {
   metal: Property;
 }
 
-const MaterialBase: MaterialOptions = {
+export const MaterialBase: MaterialOptions = {
   name: "Material Property Group",
   lightTransmission: PropertyBase,
   castShadows: PropertyBase,
@@ -243,11 +243,11 @@ const MaterialBase: MaterialOptions = {
   metal: PropertyBase,
 };
 
-interface Effects extends PropertyGroup {}
+export interface Effects extends PropertyGroup {}
 
-interface Masks extends PropertyGroup {}
+export interface Masks extends PropertyGroup {}
 
-interface SourceRect {
+export interface SourceRect {
   readonly top: number;
   readonly left: number;
   readonly width: number;
@@ -261,7 +261,7 @@ export const SourceRectBase: SourceRect = {
   height: 100,
 };
 
-interface Effect {
+export interface Effect {
   active: boolean;
   param(nameOrIndex: string | number): Property;
 }
@@ -271,7 +271,7 @@ export const EffectBase: Effect = {
   param: (nameOrIndex) => PropertyBase,
 };
 
-interface Mask {
+export interface Mask {
   maskOpacity: Property;
   maskFeather: Property;
   maskExpansion: Property;
@@ -285,7 +285,7 @@ export const MaskBase: Mask = {
   invert: false,
 };
 
-interface Light {
+export interface Light {
   pointOfInterest: Vector3D;
   intensity: number;
   color: Color;
@@ -295,9 +295,9 @@ interface Light {
   shadowDiffusion: number;
 }
 
-interface Camera {}
+export interface Camera {}
 
-interface Layer {
+export interface Layer {
   readonly name: string;
   readonly source?: Comp | Footage;
   readonly width: number;
@@ -382,7 +382,7 @@ export function comp(index: number | string) {
 export const time: number = 0;
 export const colorDepth: number = 8;
 
-interface Footage {
+export interface Footage {
   readonly name: string;
   readonly width?: number;
   readonly height?: number;
@@ -398,7 +398,7 @@ interface Footage {
   dataKeyValues?(dataPath: [], t0?: number, t1?: number): number[];
 }
 
-const FootageBase: Footage = {
+export const FootageBase: Footage = {
   name: "Footage Item",
   width: 1920,
   height: 1080,

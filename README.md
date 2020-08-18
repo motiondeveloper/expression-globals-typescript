@@ -41,6 +41,14 @@ This library mocks the After Effects expressions API in TypeScript, providing ty
 
    You can then use the properties and methods of these objects as you would within expressions.
 
+4. Import types
+
+   This package makes available After Effects specific types, such as `Layer`, `Comp`, `Color`, `Vector` and more. See `src/index.ts` for the available types.
+
+   ```js
+   import { Comp, Layer, Color } from "expression-globals-typescript";
+   ```
+
 ## Why?
 
 When writing expressions in **Typescript** using our [Expressions Library Template](https://github.com/motiondeveloper/expressions-library-template) and [rollup-plugin-ae-jsx](https://www.npmjs.com/package/rollup-plugin-ae-jsx), TypeScript will complain if you try to use the global functions and objects available in expressions.

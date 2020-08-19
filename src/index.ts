@@ -152,7 +152,7 @@ export interface Property {
     outTangent: Points | [],
     isClosed: boolean
   ): PathValue;
-  key(indexOrName: number | string): Key | Marker;
+  key(indexOrName: number | string): Key;
   propertyGroup(countUp: number): PropertyGroup;
 }
 

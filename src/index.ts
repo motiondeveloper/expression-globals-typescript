@@ -128,7 +128,7 @@ export interface Property {
   readonly numKeys: number;
   readonly propertyIndex: number;
   valueAtTime(time: number): Value;
-  velocityAtTime(time: number): number | [];
+  velocityAtTime(time: number): number | Vector;
   speedAtTime(time: number): number;
   wiggle(
     freq: number,

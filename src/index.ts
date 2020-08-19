@@ -153,6 +153,7 @@ export interface Property {
     isClosed: boolean
   ): PathValue;
   key(indexOrName: number | string): Key;
+  nearestKey(time: number): Key;
   propertyGroup(countUp: number): PropertyGroup;
 }
 
@@ -189,6 +190,7 @@ export const PropertyBase: PathProperty = {
   createPath: (points, inTangents = [], outTangent = [], isClosed = true) =>
     PathBase,
   key: (indexOrName) => KeyBase,
+  nearestKey: (t) => KeyBase,
   propertyGroup: (countUp = 1) => PropertyGroupBase,
   points: (t = time) => PointsBase,
   inTangents: (t = time) => PointsBase,

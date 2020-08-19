@@ -13,12 +13,15 @@ export const PathBase: PathValue = {};
 export interface Key {
   value: Value;
   time: number;
+  index: number;
 }
 
 export const KeyBase: Key = {
   value: "key value",
   time: 0,
+  index: 1,
 };
+
 export const PointsBase: Vector2D[] = [
   [0, 0],
   [100, 0],

@@ -149,18 +149,18 @@ export interface Property {
   loopOut(type?: loopType, numKeyframes?: number): Value;
   loopInDuration(type?: loopType, duration?: number): Value;
   loopOutDuration(type?: loopType, duration?: number): Value;
-  createPath?(
-    points: Points,
-    inTangents: Points | [],
-    outTangent: Points | [],
-    isClosed: boolean
-  ): PathValue;
   key(indexOrName: number | string): Key;
   nearestKey(time: number): Key;
   propertyGroup(countUp: number): PropertyGroup;
 }
 
 export interface PathProperty extends Property {
+  createPath(
+    points: Points,
+    inTangents: Points | [],
+    outTangent: Points | [],
+    isClosed: boolean
+  ): PathValue;
   points(time?: number): Vector2D[];
   inTangents(time?: number): Vector2D[];
   outTangents(time?: number): Vector2D[];

@@ -143,8 +143,6 @@ export class Property<T extends Value> {
   constructor(readonly value: T) {}
 }
 
-const someProperty = new Property<string>("String");
-
 export class PathProperty<T> extends Property<T> {
   readonly isClosed: boolean = true;
   createPath(

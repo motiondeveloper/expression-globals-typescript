@@ -8,437 +8,382 @@ export interface PathValue {}
 export type SourceData = any[];
 
 // Global objects, attributes, and methods
-export const PathBase: PathValue = {};
-
-export interface Key {
-  value: Value;
-  time: number;
-  index: number;
+export class Key {
+  value: string = "key value";
+  time: number = 0;
+  index: number = 1;
 }
 
-export const KeyBase: Key = {
-  value: "key value",
-  time: 0,
-  index: 1,
-};
-
-export const PointsBase: Vector2D[] = [
-  [0, 0],
-  [100, 0],
-  [100, 100],
-  [0, 100],
-];
-
-export interface Project {
-  readonly fullPath: string;
-  readonly bitsPerChannel: "8" | "16" | "32";
-  readonly linearBlending: boolean;
+export class Project {
+  fullPath: string = "path/to/project/file";
+  bitsPerChannel: "8" | "16" | "32" = "8";
+  linearBlending: boolean = true;
 }
-
-export const ProjectBase: Project = {
-  fullPath: "path/to/project/file",
-  bitsPerChannel: "8",
-  linearBlending: true,
-};
 
 export interface MarkerParam {
   [id: string]: any;
 }
 
-export interface Marker {
-  readonly time: number;
-  readonly index: number;
-  readonly duration: number;
-  readonly comment: string;
-  readonly chapter: string;
-  readonly url: string;
-  readonly frameTarget: string;
-  readonly eventCuePoint: boolean;
-  readonly cuePointName: string;
-  readonly parameters: MarkerParam;
-  readonly protectedRegion: boolean;
+export class Marker {
+  readonly time: number = 0;
+  readonly index: number = 1;
+  readonly duration: number = 0;
+  readonly comment: string = "Marker comment";
+  readonly chapter: string = "Chapter 1";
+  readonly url: string = "URL";
+  readonly frameTarget: string = "Frame Target";
+  readonly eventCuePoint: boolean = false;
+  readonly cuePointName: string = "Cue Point Name";
+  readonly parameters: MarkerParam = {};
+  readonly protectedRegion: boolean = false;
 }
 
-export interface MarkerProperty {
-  readonly numKeys: number;
-  key(index: number | string): Marker;
-  nearestKey(t: number): Marker;
+export class MarkerProperty {
+  readonly numKeys: number = 1;
+  key(index: number | string): Marker {
+    return new Marker();
+  }
+  nearestKey(t: number): Marker {
+    return new Marker();
+  }
 }
 
-export interface Comp {
-  readonly name: string;
-  readonly numLayers: number;
-  readonly activeCamera: Camera | null;
-  readonly width: number;
-  readonly height: number;
-  readonly duration: number;
-  readonly ntscDropFrame: boolean;
-  readonly displayStartTime: number;
-  readonly frameDuration: number;
-  readonly frameRate: number;
-  readonly shutterAngle: number;
-  readonly bgColor: Color;
-  readonly pixelAspect: number;
-  readonly marker?: MarkerProperty;
-  layer(indexOrOtherLayer: number | string | Layer, relIndex?: number): Layer;
+export class Comp {
+  readonly name: string = "Comp Base";
+  readonly numLayers: number = 1;
+  readonly activeCamera: Camera | null = null;
+  readonly width: number = 1920;
+  readonly height: number = 1080;
+  readonly duration: number = 10;
+  readonly ntscDropFrame: boolean = false;
+  readonly displayStartTime: number = 0;
+  readonly frameDuration: number = 0.04;
+  readonly frameRate: number = 25;
+  readonly shutterAngle: number = 180;
+  readonly bgColor: Color = [1, 1, 1, 1];
+  readonly pixelAspect: number = 1;
+  layer(indexOrOtherLayer: number | string, relIndex: number): Layer {
+    return new Layer();
+  }
 }
 
-export const CompBase: Comp = {
-  name: "Comp Base",
-  numLayers: 1,
-  activeCamera: null,
-  width: 1920,
-  height: 1080,
-  duration: 10,
-  ntscDropFrame: false,
-  displayStartTime: 0,
-  frameDuration: 0.04,
-  frameRate: 25,
-  shutterAngle: 180,
-  bgColor: [1, 1, 1, 1],
-  pixelAspect: 1,
-  layer: (indexOrOtherLayer, relIndex) => LayerBase,
-};
+const thisComp = new Comp();
 
-export interface PropertyGroup {
-  readonly name: string;
+export class PropertyGroup {
+  name: string = "property group base";
 }
-
-export const PropertyGroupBase: PropertyGroup = {
-  name: "property group base",
-};
 
 export type Value =
+  | string
   | number
+  | boolean
   | Vector
   | Vector2D
   | Vector3D
-  | String
-  | []
-  | boolean
+  | Color
   | PathValue;
 
-export const ValueBase: Value = 1;
-
-export interface Property {
-  readonly value: Value;
-  readonly name: string;
-  readonly velocity: number | [];
-  readonly speed: number;
-  readonly numKeys: number;
-  readonly propertyIndex: number;
-  valueAtTime(time: number): Value;
-  velocityAtTime(time: number): number | Vector;
-  speedAtTime(time: number): number;
+export class Property<T extends Value> {
+  readonly name: string = "Property Name";
+  readonly velocity: number | Vector = 0;
+  readonly speed: number | Vector = 0;
+  readonly numKeys: number = 0;
+  readonly propertyIndex: number = 0;
+  valueAtTime(time: number): Value {
+    return this.value;
+  }
+  velocityAtTime(time: number): number | Vector {
+    return this.velocity;
+  }
+  speedAtTime(time: number): number | Vector {
+    return this.speed;
+  }
   wiggle(
     freq: number,
     amp: number,
     octaves?: number,
     amp_mult?: number,
     time?: number
-  ): Value;
+  ): Value {
+    return this.value;
+  }
   temporalWiggle(
     freq: number,
     amp: number,
     octaves?: number,
     amp_mult?: number,
     time?: number
-  ): Value;
-  smooth(width?: number, samples?: number, time?: number): Value;
-  loopIn(type?: loopType, numKeyframes?: number): Value;
-  loopOut(type?: loopType, numKeyframes?: number): Value;
-  loopInDuration(type?: loopType, duration?: number): Value;
-  loopOutDuration(type?: loopType, duration?: number): Value;
-  key(indexOrName: number | string): Key;
-  nearestKey(time: number): Key;
-  propertyGroup(countUp: number): PropertyGroup;
+  ): Value {
+    return this.value;
+  }
+  smooth(width?: number, samples?: number, time?: number): Value {
+    return this.value;
+  }
+  loopIn(type?: loopType, numKeyframes?: number): Value {
+    return this.value;
+  }
+  loopOut(type?: loopType, numKeyframes?: number): Value {
+    return this.value;
+  }
+  loopInDuration(type?: loopType, duration?: number): Value {
+    return this.value;
+  }
+  loopOutDuration(type?: loopType, duration?: number): Value {
+    return this.value;
+  }
+  key(indexOrName: number | string): Key {
+    return new Key();
+  }
+  nearestKey(time: number): Key {
+    return new Key();
+  }
+  propertyGroup(countUp: number): PropertyGroup {
+    return new PropertyGroup();
+  }
+  constructor(readonly value: T) {}
 }
 
-export interface PathProperty extends Property {
+const someProperty = new Property<string>("String");
+
+export class PathProperty<T> extends Property<T> {
+  readonly isClosed: boolean = true;
   createPath(
     points: Points,
     inTangents: Points | [],
     outTangent: Points | [],
     isClosed: boolean
-  ): PathValue;
-  points(time?: number): Vector2D[];
-  inTangents(time?: number): Vector2D[];
-  outTangents(time?: number): Vector2D[];
-  isClosed(): boolean;
-  pointOnPath(percentage?: number, time?: number): Vector2D;
-  tangentOnPath(percentage?: number, time?: number): Vector2D;
-  normalOnPath(percentage?: number, time?: number): Vector2D;
+  ): PathValue {
+    return [
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+    ];
+  }
+  points(time?: number): Vector2D[] {
+    return [
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+    ];
+  }
+  inTangents(time?: number): Vector2D[] {
+    return [
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+    ];
+  }
+  outTangents(time?: number): Vector2D[] {
+    return [
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+    ];
+  }
+  pointOnPath(percentage?: number, time?: number): Vector2D {
+    return [0, 0];
+  }
+  tangentOnPath(percentage?: number, time?: number): Vector2D {
+    return [0, 0];
+  }
+  normalOnPath(percentage?: number, time?: number): Vector2D {
+    return [0, 0];
+  }
+  constructor(value: T) {
+    super(value);
+  }
 }
 
 export type loopType = "cycle" | "pingpong" | "offset" | "continue";
 
-export const PropertyBase: PathProperty = {
-  value: "property base string value",
-  name: "property name",
-  velocity: 0,
-  speed: 0,
-  numKeys: 0,
-  propertyIndex: 1,
-  valueAtTime: (time) => ValueBase,
-  velocityAtTime: (time) => 0,
-  speedAtTime: (time) => 0,
-  wiggle: (freq, amp, octaves = 1, amp_mult = 0.5, t = time) => ValueBase,
-  temporalWiggle: (freq, amp, octaves = 1, amp_mult = 0.5, t = time) =>
-    ValueBase,
-  smooth: (width = 0.2, samples = 5, t = time) => ValueBase,
-  loopIn: (type = "cycle", numKeyframes = 0) => ValueBase,
-  loopOut: (type = "cycle", numKeyframes = 0) => ValueBase,
-  loopInDuration: (type = "cycle", duration = 0) => ValueBase,
-  loopOutDuration: (type = "cycle", duration = 0) => ValueBase,
-  createPath: (points, inTangents = [], outTangent = [], isClosed = true) =>
-    PathBase,
-  key: (indexOrName) => KeyBase,
-  nearestKey: (t) => KeyBase,
-  propertyGroup: (countUp = 1) => PropertyGroupBase,
-  points: (t = time) => PointsBase,
-  inTangents: (t = time) => PointsBase,
-  outTangents: (t = time) => PointsBase,
-  isClosed: () => true,
-  pointOnPath: (percentage = 0.5, t = time) => [0, 0],
-  tangentOnPath: (percentage = 0.5, t = time) => [0, 0],
-  normalOnPath: (percentage = 0.5, t = time) => [0, 0],
-};
-
-export interface Transform extends PropertyGroup {
-  anchorPoint: Property;
-  position: Property;
-  scale: Property;
-  rotation: Property;
-  orientation: Property;
-  rotationX?: Property;
+export class TransformGroup extends PropertyGroup {
+  readonly anchorPoint: Property<Vector> = new Property([0, 0]);
+  readonly position: Property<Vector> = new Property([0, 0]);
+  readonly scale: Property<Vector> = new Property([0, 0]);
+  readonly rotation: Property<number> = new Property(0);
+  readonly orientation?: Property<Vector3D> = new Property([0, 0, 0]);
+  readonly rotationX?: Property<number> = new Property(0);
+  readonly rotationY?: Property<number> = new Property(0);
+  readonly rotationZ?: Property<number> = new Property(0);
 }
 
-export const TransformBase: Transform = {
-  name: "Transform",
-  anchorPoint: PropertyBase,
-  position: PropertyBase,
-  scale: PropertyBase,
-  rotation: PropertyBase,
-  orientation: PropertyBase,
-  rotationX: PropertyBase,
-};
-
-export interface MaterialOptions extends PropertyGroup {
-  lightTransmission: Property;
-  castShadows: Property;
-  acceptsShadows: Property;
-  acceptsLights: Property;
-  ambient: Property;
-  diffuse: Property;
-  specular: Property;
-  shininess: Property;
-  metal: Property;
+export class MaterialOptions extends PropertyGroup {
+  readonly lightTransmission: Property<number> = new Property(0);
+  readonly castShadows: Property<boolean> = new Property(false);
+  readonly acceptsShadows: Property<boolean> = new Property(false);
+  readonly acceptsLights: Property<boolean> = new Property(false);
+  readonly ambient: Property<number> = new Property(100);
+  readonly diffuse: Property<number> = new Property(100);
+  readonly specular: Property<number> = new Property(100);
+  readonly shininess: Property<number> = new Property(100);
+  readonly metal: Property<number> = new Property(100);
 }
 
-export const MaterialBase: MaterialOptions = {
-  name: "Material Property Group",
-  lightTransmission: PropertyBase,
-  castShadows: PropertyBase,
-  acceptsShadows: PropertyBase,
-  acceptsLights: PropertyBase,
-  ambient: PropertyBase,
-  diffuse: PropertyBase,
-  specular: PropertyBase,
-  shininess: PropertyBase,
-  metal: PropertyBase,
-};
+export class Effects extends PropertyGroup {}
 
-export interface Effects extends PropertyGroup {}
+export class Masks extends PropertyGroup {}
 
-export interface Masks extends PropertyGroup {}
-
-export interface SourceRect {
-  readonly top: number;
-  readonly left: number;
-  readonly width: number;
-  readonly height: number;
+export class SourceRect {
+  readonly top: number = 0;
+  readonly left: number = 0;
+  readonly width: number = 100;
+  readonly height: number = 100;
 }
 
-export const SourceRectBase: SourceRect = {
-  top: 0,
-  left: 0,
-  width: 100,
-  height: 100,
-};
-
-export interface Effect {
-  active: boolean;
-  param(nameOrIndex: string | number): Property;
+export class Effect {
+  active: boolean = true;
+  param(nameOrIndex: string | number): Property<string> {
+    return new Property<string>("Effect Param");
+  }
 }
 
-export const EffectBase: Effect = {
-  active: true,
-  param: (nameOrIndex) => PropertyBase,
-};
-
-export interface Mask {
-  maskOpacity: Property;
-  maskFeather: Property;
-  maskExpansion: Property;
-  invert: boolean;
+export class Mask {
+  readonly maskOpacity: Property<number> = new Property(100);
+  readonly maskFeather: Property<number> = new Property(100);
+  readonly maskExpansion: Property<number> = new Property(0);
+  readonly invert: Property<boolean> = new Property(false);
 }
 
-export const MaskBase: Mask = {
-  maskOpacity: PropertyBase,
-  maskExpansion: PropertyBase,
-  maskFeather: PropertyBase,
-  invert: false,
-};
-
-export interface Light {
-  pointOfInterest: Vector3D;
-  intensity: number;
-  color: Color;
-  coneAngle: number;
-  coneFeather: number;
-  shadowDarkness: number;
-  shadowDiffusion: number;
+export class Light {
+  readonly pointOfInterest: Property<Vector3D> = new Property([0, 0, 0]);
+  readonly intensity: Property<number> = new Property(100);
+  readonly color: Property<Color> = new Property([1, 1, 1, 1]);
+  readonly shadowDarkness: Property<number> = new Property(100);
+  readonly shadowDiffusion: Property<number> = new Property(0);
+  readonly coneAngle?: Property<number> = new Property(90);
+  readonly coneFeather?: Property<number> = new Property(50);
 }
 
-export interface Camera {}
+export class Camera {}
 
-export interface Layer {
-  readonly name: string;
-  readonly source?: Comp | Footage;
-  readonly width: number;
-  readonly height: number;
-  readonly index: number;
-  readonly parent?: Layer | Light | Camera;
-  readonly hasParent: boolean;
-  readonly inPoint: number;
-  readonly outPoint: number;
-  readonly startTime: number;
-  readonly hasVideo: boolean;
-  readonly hasAudio: boolean;
-  readonly active: boolean;
-  readonly enabled: boolean;
-  readonly audioActive?: boolean;
-  readonly audioLevels?: Property;
-  readonly timeRemap?: Property;
+export class Layer {
+  readonly name: string = "Layer name";
+  readonly source?: Comp | Footage = new Comp();
+  readonly width: number = 1920;
+  readonly height: number = 1080;
+  readonly index: number = 0;
+  readonly parent?: Layer | Light | Camera = new Layer();
+  readonly hasParent: boolean = true;
+  readonly inPoint: number = 0;
+  readonly outPoint: number = 1;
+  readonly startTime: number = 0;
+  readonly hasVideo: boolean = true;
+  readonly hasAudio: boolean = true;
+  readonly active: boolean = true;
+  readonly enabled: boolean = true;
+  readonly audioActive?: boolean = true;
+  readonly audioLevels?: Property<number> = new Property(0);
+  readonly timeRemap?: Property<number> = new Property(0);
   readonly marker?: MarkerProperty;
-  transform?: Transform;
-  materialOption?: MaterialOptions;
-  toComp(vec: Vector, time?: number): Vector;
-  fromComp(vec: Vector, time?: number): Vector;
-  toWorld(vec: Vector, time?: number): Vector;
-  toCompVec(vec: Vector, time?: number): Vector;
-  fromCompVec(vec: Vector, time?: number): Vector;
-  toWorldVec(vec: Vector, time?: number): Vector;
-  fromWorldVec(vec: Vector, time?: number): Vector;
-  fromCompToSurface(vec: Vector): Vector;
-  sourceTime?(time?: number): number;
-  sourceRectAtTime(time?: number, includeExtents?: boolean): SourceRect;
-  effect(nameOrIndex: number | string): Effect;
-  mask(nameOrIndex: number | string): Mask;
+  readonly transform?: PropertyGroup = new TransformGroup();
+  readonly materialOption?: PropertyGroup = new MaterialOptions();
+  toComp(vec: Vector, time?: number): Vector {
+    return vec;
+  }
+  fromComp(vec: Vector, time?: number): Vector {
+    return vec;
+  }
+  toWorld(vec: Vector, time?: number): Vector {
+    return vec;
+  }
+  toCompVec(vec: Vector, time?: number): Vector {
+    return vec;
+  }
+  fromCompVec(vec: Vector, time?: number): Vector {
+    return vec;
+  }
+  toWorldVec(vec: Vector, time?: number): Vector {
+    return vec;
+  }
+  fromWorldVec(vec: Vector, time?: number): Vector {
+    return vec;
+  }
+  fromCompToSurface(vec: Vector): Vector {
+    return vec;
+  }
+  sourceTime?(time?: number): number {
+    return 0;
+  }
+  sourceRectAtTime(time?: number, includeExtents?: boolean): SourceRect {
+    return new SourceRect();
+  }
+  effect(nameOrIndex: number | string): Effect {
+    return new Effect();
+  }
+  mask(nameOrIndex: number | string): Mask {
+    return new Mask();
+  }
   sampleImage(
     point: Vector2D,
     radius?: Vector2D,
     postEffect?: boolean,
     time?: number
-  ): Color;
+  ): Color {
+    return [0, 0, 0, 0];
+  }
 }
 
-export const LayerBase: Layer = {
-  name: "layer base",
-  source: CompBase,
-  width: 1920,
-  height: 1080,
-  index: 0,
-  hasParent: false,
-  inPoint: 0,
-  outPoint: 1,
-  startTime: 0,
-  hasVideo: false,
-  hasAudio: false,
-  active: true,
-  enabled: true,
-  transform: TransformBase,
-  materialOption: MaterialBase,
-  toComp: (vec, t = time) => [0, 0, 0],
-  fromComp: (vec, t = time) => [0, 0, 0],
-  toWorld: (vec, t = time) => [0, 0, 0],
-  toCompVec: (vec, t = time) => [0, 0, 0],
-  fromCompVec: (vec, t = time) => [0, 0, 0],
-  toWorldVec: (vec, t = time) => [0, 0, 0],
-  fromWorldVec: (vec, t = time) => [0, 0, 0],
-  fromCompToSurface: (vec) => [0, 0, 0],
-  sourceTime: (t = time) => 0,
-  sourceRectAtTime: (t = time, includeExtents = false) => SourceRectBase,
-  effect: (nameOrIndex) => EffectBase,
-  mask: (nameOrIndex) => MaskBase,
-  sampleImage: (
-    point,
-    radius = [0.5, 0.5],
-    postEffect?: boolean,
-    time?: number
-  ) => [1, 1, 1, 1],
-};
-
-export const layer = CompBase.layer;
+export function layer(indexOrOtherLayer: string | number, relIndex: number) {
+  return new Comp().layer(indexOrOtherLayer, relIndex);
+}
 export function comp(index: number | string) {
-  return CompBase;
+  return new Comp();
 }
 
 export const time: number = 0;
 export const colorDepth: number = 8;
 
-export interface Footage {
-  readonly name: string;
-  readonly width?: number;
-  readonly height?: number;
-  readonly duration?: number;
-  readonly frameDuration?: number;
-  readonly ntscDropFrame?: boolean;
-  readonly pixelAspect?: number;
-  readonly sourceText?: string;
-  readonly sourceData?: SourceData[];
-  dataValue?(dataPath: []): number;
-  dataKeyCount?(dataPath: []): number;
-  dataKeyTimes?(dataPath: [], t0?: number, t1?: number): number[];
-  dataKeyValues?(dataPath: [], t0?: number, t1?: number): number[];
+export class Footage {
+  readonly name: string = "Layer Name";
+  readonly width?: number = 500;
+  readonly height?: number = 500;
+  readonly duration?: number = 10;
+  readonly frameDuration?: number = 0.04;
+  readonly ntscDropFrame?: boolean = false;
+  readonly pixelAspect?: number = 1;
+  readonly sourceText?: string = "Source Text";
+  readonly sourceData?: SourceData[] = [["source data"]];
+  dataValue?(dataPath: []): number {
+    return 0;
+  }
+  dataKeyCount?(dataPath: []): number {
+    return 0;
+  }
+  dataKeyTimes?(dataPath: [], t0?: number, t1?: number): number[] {
+    return [0, 0];
+  }
+  dataKeyValues?(dataPath: [], t0?: number, t1?: number): number[] {
+    return [0, 0];
+  }
 }
 
-export const FootageBase: Footage = {
-  name: "Footage Item",
-  width: 1920,
-  height: 1080,
-  duration: 10,
-  frameDuration: 0.04,
-  ntscDropFrame: false,
-  pixelAspect: 1,
-  sourceText: "Source text",
-  sourceData: ["Source data"] as SourceData,
-  dataValue: (dataPath: []) => 0,
-};
-
 export function footage(name: string): Footage {
-  return FootageBase;
+  return new Footage();
 }
 
 // Time conversion methods
 
 export function timeToFrames(
-  t: number = time + CompBase.displayStartTime,
-  fps: number = 1.0 / CompBase.frameDuration,
+  t: number = time + thisComp.displayStartTime,
+  fps: number = 1.0 / thisComp.frameDuration,
   isDuration: boolean = false
 ): number {
-  return time * CompBase.frameDuration;
+  return time * thisComp.frameDuration;
 }
 
 export function framesToTime(
   frames: number,
-  fps: number = 1.0 / CompBase.frameDuration
+  fps: number = 1.0 / thisComp.frameDuration
 ): number {
-  return frames * CompBase.frameDuration;
+  return frames * thisComp.frameDuration;
 }
 
 export function timeToTimecode(
-  t: number = time + CompBase.displayStartTime,
+  t: number = time + thisComp.displayStartTime,
   timecodeBase: number = 30,
   isDuration: boolean = false
 ): string {
@@ -446,7 +391,7 @@ export function timeToTimecode(
 }
 
 export function timeToNTSCTimecode(
-  t: number = time + CompBase.displayStartTime,
+  t: number = time + thisComp.displayStartTime,
   ntscDropFrame: boolean = false,
   isDuration: boolean = false
 ) {
@@ -454,8 +399,8 @@ export function timeToNTSCTimecode(
 }
 
 export function timeToFeetAndFrames(
-  t: number = time + CompBase.displayStartTime,
-  fps: number = 1.0 / CompBase.frameDuration,
+  t: number = time + thisComp.displayStartTime,
+  fps: number = 1.0 / thisComp.frameDuration,
   framesPerFoot: number = 16,
   isDuration: boolean = false
 ): string {
@@ -463,10 +408,10 @@ export function timeToFeetAndFrames(
 }
 
 export function timeToCurrentFormat(
-  t: number = time + CompBase.displayStartTime,
-  fps: number = 1.0 / CompBase.frameDuration,
+  t: number = time + thisComp.displayStartTime,
+  fps: number = 1.0 / thisComp.frameDuration,
   isDuration: boolean = false,
-  ntscDropFrame: boolean = CompBase.ntscDropFrame
+  ntscDropFrame: boolean = thisComp.ntscDropFrame
 ): string {
   return "0000";
 }

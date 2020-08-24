@@ -25,28 +25,26 @@ This library mocks the After Effects expressions API in TypeScript, providing ty
    } from "expression-globals-typescript";
    ```
 
-3. Import object bases to create layer, comp, and property mocks
+3. Import classes to create layer, comp, and property mocks
 
-   ```js
-   import {
-     PropertyBase,
-     LayerBase,
-     CompBase,
-   } from "expression-globals-typescript";
+   ```ts
+   import { Property, Layer, Comp } from "expression-globals-typescript";
 
-   const thisProperty = Object.create(PropertyBase);
-   const thisLayer = Object.create(LayerBase);
-   const thisComp = Object.create(CompBase);
+   const thisProperty = new Property<string>("Property value");
+   const thisLayer = new Layer();
+   const thisComp = new Comp();
    ```
 
    You can then use the properties and methods of these objects as you would within expressions.
 
+   The `Property` constructor function takes a value and type (`<>`) for the `value` of the `Property`.
+
 4. Import types
 
-   This package makes available After Effects specific types, such as `Layer`, `Comp`, `Color`, `Vector` and more. See `src/index.ts` for the available types.
+   This package makes available After Effects specific types, such as `Color`, `Vector` and more. See `src/index.ts` for the available types.
 
    ```js
-   import { Comp, Layer, Color } from "expression-globals-typescript";
+   import { Color, Vector, Value } from "expression-globals-typescript";
    ```
 
 ## Why?

@@ -62,7 +62,7 @@ export class Comp {
   readonly shutterAngle: number = 180;
   readonly bgColor: Color = [1, 1, 1, 1];
   readonly pixelAspect: number = 1;
-  layer(indexOrOtherLayer: number | string, relIndex: number): Layer {
+  layer(indexOrOtherLayer: number | string, relIndex?: number): Layer {
     return new Layer();
   }
 }
@@ -325,7 +325,7 @@ export class Layer {
   }
 }
 
-export function layer(indexOrOtherLayer: string | number, relIndex: number) {
+export function layer(indexOrOtherLayer: string | number, relIndex?: number) {
   return new Comp().layer(indexOrOtherLayer, relIndex);
 }
 export function comp(index: number | string) {

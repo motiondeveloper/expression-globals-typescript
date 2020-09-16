@@ -70,7 +70,10 @@ export class Comp {
 const thisComp = new Comp();
 
 export class PropertyGroup {
-  name: string = "property group base";
+  readonly name: string = "property group base";
+  constructor(groupName: string) {
+    this.name = groupName;
+  }
 }
 
 export type Value =
@@ -138,7 +141,7 @@ export class Property<T extends Value> {
     return new Key();
   }
   propertyGroup(countUp: number): PropertyGroup {
-    return new PropertyGroup();
+    return new PropertyGroup("property group from function");
   }
   constructor(readonly value: T) {}
 }
@@ -198,7 +201,10 @@ export class PathProperty<T> extends Property<T> {
 
 export type loopType = "cycle" | "pingpong" | "offset" | "continue";
 
-export class TransformGroup extends PropertyGroup {
+export class Transform extends PropertyGroup {
+  constructor() {
+    super("Transform");
+  }
   readonly anchorPoint: Property<Vector> = new Property([0, 0]);
   readonly position: Property<Vector> = new Property([0, 0]);
   readonly scale: Property<Vector> = new Property([0, 0]);
@@ -209,7 +215,108 @@ export class TransformGroup extends PropertyGroup {
   readonly rotationZ?: Property<number> = new Property(0);
 }
 
+export class TextStyle {
+  fontSize: number = 0;
+  setFontSize(fontSize: number): TextStyle {
+    this.fontSize = fontSize;
+    return this;
+  }
+  font: string = "Arial";
+  setFont(font: string): TextStyle {
+    this.font = font;
+    return this;
+  }
+  setText(text: string): TextStyle {
+    return this;
+  }
+  isFauxBold: boolean = false;
+  setFauxBold(isFauxBold: boolean): TextStyle {
+    this.isFauxBold = isFauxBold;
+    return this;
+  }
+  isFauxItalic: boolean = false;
+  setFauxItalic(isFauxItalic: boolean): TextStyle {
+    this.isFauxItalic = isFauxItalic;
+    return this;
+  }
+  isAllCaps: boolean = false;
+  setAllCaps(isAllCaps: boolean): TextStyle {
+    this.isAllCaps = isAllCaps;
+    return this;
+  }
+  isSmallCaps: boolean = false;
+  setSmallCaps(isSmallCaps: boolean): TextStyle {
+    this.isSmallCaps = isSmallCaps;
+    return this;
+  }
+  tracking: number = 0;
+  setTracking(tracking: number): TextStyle {
+    this.tracking = tracking;
+    return this;
+  }
+  leading: number = 60;
+  setLeading(leading: number): TextStyle {
+    this.leading = leading;
+    return this;
+  }
+  autoLeading: boolean = false;
+  setAutoLeading(autoLeading: boolean): TextStyle {
+    this.autoLeading = autoLeading;
+    return this;
+  }
+  baselineShift: number = 0;
+  setBaselineShift(baselineShift: number): TextStyle {
+    this.baselineShift = baselineShift;
+    return this;
+  }
+  applyFill: boolean = true;
+  setApplyFill(applyFill: boolean): TextStyle {
+    this.applyFill = applyFill;
+    return this;
+  }
+  fillColor: [number, number, number] = [1, 1, 1];
+  setFillColor(fillColor: [number, number, number]): TextStyle {
+    this.fillColor = fillColor;
+    return this;
+  }
+  applyStroke: boolean = false;
+  setApplyStroke(applyStroke: boolean): TextStyle {
+    this.applyStroke = applyStroke;
+    return this;
+  }
+  strokeColor: [number, number, number] = [1, 1, 1];
+  setStrokeColor(strokeColor: [number, number, number]): TextStyle {
+    this.strokeColor = strokeColor;
+    return this;
+  }
+  strokeWidth: number = 0;
+  setStrokeWidth(strokeWidth: number): TextStyle {
+    this.strokeWidth = strokeWidth;
+    return this;
+  }
+}
+
+export class SourceText extends Property<string> {
+  constructor(value: string) {
+    super(value);
+  }
+  style = new TextStyle();
+  getStyleAt(characterIndex: number, sampleTime: number = time) {
+    return this.style;
+  }
+}
+
+export class Text extends PropertyGroup {
+  constructor() {
+    super("Text");
+  }
+  readonly sourceText: SourceText = new SourceText("Source text value");
+}
+
 export class MaterialOptions extends PropertyGroup {
+  constructor() {
+    super("Material Options");
+  }
   readonly lightTransmission: Property<number> = new Property(0);
   readonly castShadows: Property<boolean> = new Property(false);
   readonly acceptsShadows: Property<boolean> = new Property(false);
@@ -277,8 +384,9 @@ export class Layer {
   readonly audioLevels?: Property<number> = new Property(0);
   readonly timeRemap?: Property<number> = new Property(0);
   readonly marker?: MarkerProperty;
-  readonly transform?: PropertyGroup = new TransformGroup();
-  readonly materialOption?: PropertyGroup = new MaterialOptions();
+  readonly transform?: Transform = new Transform();
+  readonly text?: Text = new Text();
+  readonly materialOption?: MaterialOptions = new MaterialOptions();
   toComp(vec: Vector, time?: number): Vector {
     return vec;
   }

@@ -207,6 +207,9 @@ export class Transform extends PropertyGroup {
   }
   readonly anchorPoint: Property<Vector> = new Property([0, 0]);
   readonly position: Property<Vector> = new Property([0, 0]);
+  readonly xPosition: Property<number> = new Property(0);
+  readonly yPosition: Property<number> = new Property(0);
+  readonly zPosition: Property<number> = new Property(0);
   readonly scale: Property<Vector> = new Property([0, 0]);
   readonly rotation: Property<number> = new Property(0);
   readonly orientation?: Property<Vector3D> = new Property([0, 0, 0]);

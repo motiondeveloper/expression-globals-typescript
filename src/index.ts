@@ -306,11 +306,35 @@ export class SourceText extends Property<string> {
   }
 }
 
+export class TextPathOptions extends PropertyGroup {
+  constructor() {
+    super("Path Options");
+  }
+  readonly path: string | undefined = "Mask 1";
+  readonly reversePath?: boolean = false;
+  readonly perpendicularToPath?: Property<boolean> = new Property(false);
+  readonly forceAlignment?: Property<boolean> = new Property(false);
+  readonly firstMargin?: Property<number> = new Property(0);
+  readonly lastMargin?: Property<number> = new Property(0);
+}
+
+export class TextMoreOptions extends PropertyGroup {
+  constructor() {
+    super("More Options");
+  }
+  readonly anchorPointGrouping: number = 1;
+  readonly groupingAlignment: Property<[number, number]> = new Property([0, 0]);
+  readonly fillANdStroke: number = 1;
+  readonly interCharacterBlending: number = 1;
+}
+
 export class Text extends PropertyGroup {
   constructor() {
     super("Text");
   }
   readonly sourceText: SourceText = new SourceText("Source text value");
+  readonly pathOption: TextPathOptions = new TextPathOptions();
+  readonly moreOption: TextMoreOptions = new TextMoreOptions();
 }
 
 export class MaterialOptions extends PropertyGroup {

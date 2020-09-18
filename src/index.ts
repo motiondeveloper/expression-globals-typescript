@@ -458,6 +458,12 @@ export class Layer {
   ): Color {
     return [0, 0, 0, 0];
   }
+  degreesToRadians(degrees: number): number {
+    return degrees;
+  }
+  radiansToDegrees(radians: number): number {
+    return radians;
+  }
 }
 
 export function layer(indexOrOtherLayer: string | number, relIndex?: number) {

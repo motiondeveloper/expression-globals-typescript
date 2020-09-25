@@ -14,18 +14,7 @@ This library mocks the After Effects expressions API in TypeScript, providing ty
 
    Found in our [Expressions Library Template](https://github.com/motiondeveloper/expressions-library-template).
 
-2. Import globals functions as needed
-
-   ```js
-   import {
-     timeToFrames,
-     add,
-     length,
-     random,
-   } from "expression-globals-typescript";
-   ```
-
-3. Import classes to create layer, comp, and property mocks
+2. Import classes to create layer, comp, and property mocks
 
    ```ts
    import { Property, Layer, Comp } from "expression-globals-typescript";
@@ -39,7 +28,7 @@ This library mocks the After Effects expressions API in TypeScript, providing ty
 
    The `Property` constructor function takes a value and type (`<>`) for the `value` of the `Property`.
 
-4. Import types
+3. Import types
 
    This package makes available After Effects specific types, such as `Color`, `Vector` and more. See `src/index.ts` for the available types.
 

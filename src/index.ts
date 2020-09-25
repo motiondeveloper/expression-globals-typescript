@@ -67,8 +67,6 @@ export class Comp {
   }
 }
 
-const thisComp = new Comp();
-
 export class PropertyGroup {
   readonly name: string = "property group base";
   constructor(groupName: string) {
@@ -392,9 +390,13 @@ export class Light {
 
 export class Camera {}
 
+const thisComp = new Comp();
+
 export class Layer {
+  readonly time: number = 0;
+  readonly colorDepth: number = 8;
   readonly name: string = "Layer name";
-  readonly source?: Comp | Footage = new Comp();
+  readonly source?: Comp | Footage = thisComp;
   readonly width: number = 1920;
   readonly height: number = 1080;
   readonly index: number = 0;
@@ -464,17 +466,147 @@ export class Layer {
   radiansToDegrees(radians: number): number {
     return radians;
   }
+  footage(name: string): Footage {
+    return new Footage();
+  }
+  layer(indexOrOtherLayer: string | number, relIndex?: number) {
+    return thisComp.layer(indexOrOtherLayer, relIndex);
+  }
+  comp(index: number | string) {
+    return thisComp;
+  }
+  timeToFrames(
+    t: number = this.time + thisComp.displayStartTime,
+    fps: number = 1.0 / thisComp.frameDuration,
+    isDuration: boolean = false
+  ): number {
+    return this.time * thisComp.frameDuration;
+  }
+  framesToTime(
+    frames: number,
+    fps: number = 1.0 / thisComp.frameDuration
+  ): number {
+    return frames * thisComp.frameDuration;
+  }
+  timeToTimecode(
+    t: number = this.time + thisComp.displayStartTime,
+    timecodeBase: number = 30,
+    isDuration: boolean = false
+  ): string {
+    return "00:00:00:00";
+  }
+  timeToNTSCTimecode(
+    t: number = this.time + thisComp.displayStartTime,
+    ntscDropFrame: boolean = false,
+    isDuration: boolean = false
+  ) {
+    return "00:00:00:00";
+  }
+  timeToFeetAndFrames(
+    t: number = this.time + thisComp.displayStartTime,
+    fps: number = 1.0 / thisComp.frameDuration,
+    framesPerFoot: number = 16,
+    isDuration: boolean = false
+  ): string {
+    return "00:00:00:00";
+  }
+  timeToCurrentFormat(
+    t: number = this.time + thisComp.displayStartTime,
+    fps: number = 1.0 / thisComp.frameDuration,
+    isDuration: boolean = false,
+    ntscDropFrame: boolean = thisComp.ntscDropFrame
+  ): string {
+    return "0000";
+  }
+  add(vec1: Vector, vec2: Vector): Vector {
+    return vec1;
+  }
+  sub(vec1: Vector, vec2: Vector): Vector {
+    return vec1;
+  }
+  mul(vec1: Vector, amount: number): Vector {
+    return vec1;
+  }
+  div(vec1: Vector, amount: number): Vector {
+    return vec1;
+  }
+  clamp(value: number | [], limit1: number, limit2: number): number | [] {
+    return value;
+  }
+  dot(vec1: Vector, vec2: Vector): Vector {
+    return vec1;
+  }
+  cross(vec1: Vector, vec2: Vector): Vector {
+    return vec1;
+  }
+  normalize(vec1: Vector, vec2: Vector): Vector {
+    return [1, 1];
+  }
+  length(point1: Vector, point2?: Vector): number {
+    return 1;
+  }
+  lookAt(fromPoint: Vector, atPoint: Vector): Vector3D {
+    return [0, 0, 0];
+  }
+  seedRandom(offset: number, timeless: boolean = false): void {}
+  random(minValOrArray: number | [], maxValOrArray: number | []): number | [] {
+    return minValOrArray;
+  }
+  gaussRandom(
+    minValOrArray: number | [],
+    maxValOrArray: number | []
+  ): number | [] {
+    return minValOrArray;
+  }
+  noise(valOrArray: number | []): number {
+    return 1;
+  }
+  linear(
+    t: number,
+    tMin: number,
+    tMax: number,
+    value1?: number | [],
+    value2?: number | []
+  ): number | [] {
+    return value1 || tMin;
+  }
+  ease(
+    t: number,
+    tMin: number,
+    tMax: number,
+    value1?: number | [],
+    value2?: number | []
+  ): number | [] {
+    return value1 || tMin;
+  }
+  easeIn(
+    t: number,
+    tMin: number,
+    tMax: number,
+    value1?: number | [],
+    value2?: number | []
+  ): number | [] {
+    return value1 || tMin;
+  }
+  easeOut(
+    t: number,
+    tMin: number,
+    tMax: number,
+    value1?: number | [],
+    value2?: number | []
+  ): number | [] {
+    return value1 || tMin;
+  }
+  rgbToHsl(rgbaArray: Color): Color {
+    return [1, 1, 1, 1];
+  }
+  hslToRgb(hslaArray: Color): Color {
+    return [1, 1, 1, 1];
+  }
+  hexToRgb(hex: string): Color {
+    return [1, 1, 1, 1];
+  }
 }
-
-export function layer(indexOrOtherLayer: string | number, relIndex?: number) {
-  return new Comp().layer(indexOrOtherLayer, relIndex);
-}
-export function comp(index: number | string) {
-  return new Comp();
-}
-
-export const time: number = 0;
-export const colorDepth: number = 8;
 
 export class Footage {
   readonly name: string = "Layer Name";
@@ -498,181 +630,4 @@ export class Footage {
   dataKeyValues?(dataPath: [], t0?: number, t1?: number): number[] {
     return [0, 0];
   }
-}
-
-export function footage(name: string): Footage {
-  return new Footage();
-}
-
-// Time conversion methods
-
-export function timeToFrames(
-  t: number = time + thisComp.displayStartTime,
-  fps: number = 1.0 / thisComp.frameDuration,
-  isDuration: boolean = false
-): number {
-  return time * thisComp.frameDuration;
-}
-
-export function framesToTime(
-  frames: number,
-  fps: number = 1.0 / thisComp.frameDuration
-): number {
-  return frames * thisComp.frameDuration;
-}
-
-export function timeToTimecode(
-  t: number = time + thisComp.displayStartTime,
-  timecodeBase: number = 30,
-  isDuration: boolean = false
-): string {
-  return "00:00:00:00";
-}
-
-export function timeToNTSCTimecode(
-  t: number = time + thisComp.displayStartTime,
-  ntscDropFrame: boolean = false,
-  isDuration: boolean = false
-) {
-  return "00:00:00:00";
-}
-
-export function timeToFeetAndFrames(
-  t: number = time + thisComp.displayStartTime,
-  fps: number = 1.0 / thisComp.frameDuration,
-  framesPerFoot: number = 16,
-  isDuration: boolean = false
-): string {
-  return "00:00:00:00";
-}
-
-export function timeToCurrentFormat(
-  t: number = time + thisComp.displayStartTime,
-  fps: number = 1.0 / thisComp.frameDuration,
-  isDuration: boolean = false,
-  ntscDropFrame: boolean = thisComp.ntscDropFrame
-): string {
-  return "0000";
-}
-
-// Vector Math methods
-
-export function add(vec1: Vector, vec2: Vector): Vector {
-  return vec1;
-}
-export function sub(vec1: Vector, vec2: Vector): Vector {
-  return vec1;
-}
-export function mul(vec1: Vector, amount: number): Vector {
-  return vec1;
-}
-export function div(vec1: Vector, amount: number): Vector {
-  return vec1;
-}
-export function clamp(
-  value: number | [],
-  limit1: number,
-  limit2: number
-): number | [] {
-  return value;
-}
-export function dot(vec1: Vector, vec2: Vector): Vector {
-  return vec1;
-}
-export function cross(vec1: Vector, vec2: Vector): Vector {
-  return vec1;
-}
-export function normalize(vec1: Vector, vec2: Vector): Vector {
-  return [1, 1];
-}
-export function length(point1: Vector, point2?: Vector): number {
-  return 1;
-}
-export function lookAt(fromPoint: Vector, atPoint: Vector): Vector3D {
-  return [0, 0, 0];
-}
-
-// Random number methods
-
-export function seedRandom(offset: number, timeless: boolean = false): void {}
-export function random(
-  minValOrArray: number | [],
-  maxValOrArray: number | []
-): number | [] {
-  return minValOrArray;
-}
-export function gaussRandom(
-  minValOrArray: number | [],
-  maxValOrArray: number | []
-): number | [] {
-  return minValOrArray;
-}
-export function noise(valOrArray: number | []): number {
-  return 1;
-}
-
-// Interpolation methods
-
-export function linear(
-  t: number,
-  tMin: number,
-  tMax: number,
-  value1?: number | [],
-  value2?: number | []
-): number | [] {
-  return value1 || tMin;
-}
-
-export function ease(
-  t: number,
-  tMin: number,
-  tMax: number,
-  value1?: number | [],
-  value2?: number | []
-): number | [] {
-  return value1 || tMin;
-}
-
-export function easeIn(
-  t: number,
-  tMin: number,
-  tMax: number,
-  value1?: number | [],
-  value2?: number | []
-): number | [] {
-  return value1 || tMin;
-}
-
-export function easeOut(
-  t: number,
-  tMin: number,
-  tMax: number,
-  value1?: number | [],
-  value2?: number | []
-): number | [] {
-  return value1 || tMin;
-}
-
-// Color Conversion methods
-
-export function rgbToHsl(rgbaArray: Color): Color {
-  return [1, 1, 1, 1];
-}
-
-export function hslToRgb(hslaArray: Color): Color {
-  return [1, 1, 1, 1];
-}
-
-export function hexToRgb(hex: string): Color {
-  return [1, 1, 1, 1];
-}
-
-// Other Math methods
-
-export function degreesToRadians(degrees: number): number {
-  return 1;
-}
-
-export function radiansToDegrees(radians: number): number {
-  return 1;
 }

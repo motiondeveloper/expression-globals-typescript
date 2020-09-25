@@ -63,7 +63,7 @@ export class Comp {
   readonly bgColor: Color = [1, 1, 1, 1];
   readonly pixelAspect: number = 1;
   layer(indexOrOtherLayer: number | string, relIndex?: number): Layer {
-    return new Layer();
+    return thisLayer;
   }
 }
 
@@ -304,7 +304,7 @@ export class SourceText extends Property<string> {
     super(value);
   }
   style = new TextStyle();
-  getStyleAt(characterIndex: number, sampleTime: number = time) {
+  getStyleAt(characterIndex: number, sampleTime: number = thisLayer.time) {
     return this.style;
   }
 }
@@ -429,7 +429,7 @@ export class Layer {
   readonly width: number = 1920;
   readonly height: number = 1080;
   readonly index: number = 0;
-  readonly parent?: Layer | Light | Camera = new Layer();
+  readonly parent?: Layer | Light | Camera = thisLayer;
   readonly hasParent: boolean = true;
   readonly inPoint: number = 0;
   readonly outPoint: number = 1;
@@ -636,6 +636,8 @@ export class Layer {
     return [1, 1, 1, 1];
   }
 }
+
+const thisLayer = new Layer();
 
 export class Footage {
   readonly name: string = "Layer Name";

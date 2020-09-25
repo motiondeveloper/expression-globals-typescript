@@ -85,7 +85,6 @@ export type Value =
   | PathValue;
 
 export class Property<T extends Value> {
-  readonly name: string = "Property Name";
   readonly velocity: number | Vector = 0;
   readonly speed: number | Vector = 0;
   readonly numKeys: number = 0;
@@ -141,7 +140,7 @@ export class Property<T extends Value> {
   propertyGroup(countUp: number): PropertyGroup {
     return new PropertyGroup("property group from function");
   }
-  constructor(readonly value: T) {}
+  constructor(readonly value: T, readonly name: string = "Property name") {}
 }
 
 export class PathProperty<T> extends Property<T> {
@@ -203,17 +202,20 @@ export class Transform extends PropertyGroup {
   constructor() {
     super("Transform");
   }
-  readonly anchorPoint: Property<Vector> = new Property([0, 0]);
-  readonly position: Property<Vector> = new Property([0, 0]);
-  readonly xPosition: Property<number> = new Property(0);
-  readonly yPosition: Property<number> = new Property(0);
-  readonly zPosition: Property<number> = new Property(0);
-  readonly scale: Property<Vector> = new Property([0, 0]);
-  readonly rotation: Property<number> = new Property(0);
-  readonly orientation?: Property<Vector3D> = new Property([0, 0, 0]);
-  readonly rotationX?: Property<number> = new Property(0);
-  readonly rotationY?: Property<number> = new Property(0);
-  readonly rotationZ?: Property<number> = new Property(0);
+  readonly anchorPoint: Property<Vector> = new Property([0, 0], "Anchor Point");
+  readonly position: Property<Vector> = new Property([0, 0], "Position");
+  readonly xPosition: Property<number> = new Property(0, "X Position");
+  readonly yPosition: Property<number> = new Property(0, "Y Position");
+  readonly zPosition: Property<number> = new Property(0, "Z Position");
+  readonly scale: Property<Vector> = new Property([0, 0], "Scale");
+  readonly rotation: Property<number> = new Property(0, "Rotation");
+  readonly orientation?: Property<Vector3D> = new Property(
+    [0, 0, 0],
+    "Orientation"
+  );
+  readonly rotationX?: Property<number> = new Property(0, "X Rotation");
+  readonly rotationY?: Property<number> = new Property(0, "Y Rotation");
+  readonly rotationZ?: Property<number> = new Property(0, "Z Rotation");
 }
 
 export class TextStyle {
@@ -313,10 +315,16 @@ export class TextPathOptions extends PropertyGroup {
   }
   readonly path: string | undefined = "Mask 1";
   readonly reversePath?: boolean = false;
-  readonly perpendicularToPath?: Property<boolean> = new Property(false);
-  readonly forceAlignment?: Property<boolean> = new Property(false);
-  readonly firstMargin?: Property<number> = new Property(0);
-  readonly lastMargin?: Property<number> = new Property(0);
+  readonly perpendicularToPath?: Property<boolean> = new Property(
+    false,
+    "Perpendicular To Path"
+  );
+  readonly forceAlignment?: Property<boolean> = new Property(
+    false,
+    "Force Alignment"
+  );
+  readonly firstMargin?: Property<number> = new Property(0, "First Margin");
+  readonly lastMargin?: Property<number> = new Property(0, "Last Margin");
 }
 
 export class TextMoreOptions extends PropertyGroup {
@@ -324,7 +332,10 @@ export class TextMoreOptions extends PropertyGroup {
     super("More Options");
   }
   readonly anchorPointGrouping: number = 1;
-  readonly groupingAlignment: Property<[number, number]> = new Property([0, 0]);
+  readonly groupingAlignment: Property<[number, number]> = new Property(
+    [0, 0],
+    "Grouping Alignment"
+  );
   readonly fillANdStroke: number = 1;
   readonly interCharacterBlending: number = 1;
 }
@@ -342,15 +353,24 @@ export class MaterialOptions extends PropertyGroup {
   constructor() {
     super("Material Options");
   }
-  readonly lightTransmission: Property<number> = new Property(0);
-  readonly castShadows: Property<boolean> = new Property(false);
-  readonly acceptsShadows: Property<boolean> = new Property(false);
-  readonly acceptsLights: Property<boolean> = new Property(false);
-  readonly ambient: Property<number> = new Property(100);
-  readonly diffuse: Property<number> = new Property(100);
-  readonly specular: Property<number> = new Property(100);
-  readonly shininess: Property<number> = new Property(100);
-  readonly metal: Property<number> = new Property(100);
+  readonly lightTransmission: Property<number> = new Property(
+    0,
+    "Light Transmission"
+  );
+  readonly castShadows: Property<boolean> = new Property(false, "Cast Shadows");
+  readonly acceptsShadows: Property<boolean> = new Property(
+    false,
+    "Accept Shadows"
+  );
+  readonly acceptsLights: Property<boolean> = new Property(
+    false,
+    "Accepts Lights"
+  );
+  readonly ambient: Property<number> = new Property(100, "Ambient");
+  readonly diffuse: Property<number> = new Property(100, "Diffuse");
+  readonly specular: Property<number> = new Property(100, "Specular");
+  readonly shininess: Property<number> = new Property(100, "Shininess");
+  readonly metal: Property<number> = new Property(100, "Metal");
 }
 
 export class Effects extends PropertyGroup {}
@@ -372,20 +392,29 @@ export class Effect {
 }
 
 export class Mask {
-  readonly maskOpacity: Property<number> = new Property(100);
-  readonly maskFeather: Property<number> = new Property(100);
-  readonly maskExpansion: Property<number> = new Property(0);
-  readonly invert: Property<boolean> = new Property(false);
+  readonly maskOpacity: Property<number> = new Property(100, "Mask Opacity");
+  readonly maskFeather: Property<number> = new Property(100, "Mask Feather");
+  readonly maskExpansion: Property<number> = new Property(0, "Mask Expansion");
+  readonly invert: Property<boolean> = new Property(false, "Invert");
 }
 
 export class Light {
-  readonly pointOfInterest: Property<Vector3D> = new Property([0, 0, 0]);
-  readonly intensity: Property<number> = new Property(100);
-  readonly color: Property<Color> = new Property([1, 1, 1, 1]);
-  readonly shadowDarkness: Property<number> = new Property(100);
-  readonly shadowDiffusion: Property<number> = new Property(0);
-  readonly coneAngle?: Property<number> = new Property(90);
-  readonly coneFeather?: Property<number> = new Property(50);
+  readonly pointOfInterest: Property<Vector3D> = new Property(
+    [0, 0, 0],
+    "Point of Interest"
+  );
+  readonly intensity: Property<number> = new Property(100, "Intensity");
+  readonly color: Property<Color> = new Property([1, 1, 1, 1], "Color");
+  readonly shadowDarkness: Property<number> = new Property(
+    100,
+    "Shadow Darkness"
+  );
+  readonly shadowDiffusion: Property<number> = new Property(
+    0,
+    "Shadow Diffusion"
+  );
+  readonly coneAngle?: Property<number> = new Property(90, "Cone Angle");
+  readonly coneFeather?: Property<number> = new Property(50, "Cone Feather");
 }
 
 export class Camera {}
@@ -410,8 +439,8 @@ export class Layer {
   readonly active: boolean = true;
   readonly enabled: boolean = true;
   readonly audioActive?: boolean = true;
-  readonly audioLevels?: Property<number> = new Property(0);
-  readonly timeRemap?: Property<number> = new Property(0);
+  readonly audioLevels?: Property<number> = new Property(0, "Audio Levels");
+  readonly timeRemap?: Property<number> = new Property(0, "Time Remap");
   readonly marker?: MarkerProperty;
   readonly transform?: Transform = new Transform();
   readonly text?: Text = new Text();

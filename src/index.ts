@@ -445,34 +445,37 @@ export class Layer {
   readonly transform?: Transform = new Transform();
   readonly text?: Text = new Text();
   readonly materialOption?: MaterialOptions = new MaterialOptions();
-  toComp(vec: Vector, time?: number): Vector {
+  toComp(vec: Vector, time: number = this.time): Vector {
     return vec;
   }
-  fromComp(vec: Vector, time?: number): Vector {
+  fromComp(vec: Vector, time: number = this.time): Vector {
     return vec;
   }
-  toWorld(vec: Vector, time?: number): Vector {
+  toWorld(vec: Vector, time: number = this.time): Vector {
     return vec;
   }
-  toCompVec(vec: Vector, time?: number): Vector {
+  toCompVec(vec: Vector, time: number = this.time): Vector {
     return vec;
   }
-  fromCompVec(vec: Vector, time?: number): Vector {
+  fromCompVec(vec: Vector, time: number = this.time): Vector {
     return vec;
   }
-  toWorldVec(vec: Vector, time?: number): Vector {
+  toWorldVec(vec: Vector, time: number = this.time): Vector {
     return vec;
   }
-  fromWorldVec(vec: Vector, time?: number): Vector {
+  fromWorldVec(vec: Vector, time: number = this.time): Vector {
     return vec;
   }
-  fromCompToSurface(vec: Vector): Vector {
+  fromCompToSurface(vec: Vector, time: number = this.time): Vector {
     return vec;
   }
-  sourceTime?(time?: number): number {
+  sourceTime?(time: number = this.time): number {
     return 0;
   }
-  sourceRectAtTime(time?: number, includeExtents?: boolean): SourceRect {
+  sourceRectAtTime(
+    time: number = this.time,
+    includeExtents: boolean = false
+  ): SourceRect {
     return new SourceRect();
   }
   effect(nameOrIndex: number | string): Effect {
@@ -483,9 +486,9 @@ export class Layer {
   }
   sampleImage(
     point: Vector2D,
-    radius?: Vector2D,
-    postEffect?: boolean,
-    time?: number
+    radius: Vector2D = [0.5, 0.5],
+    postEffect: boolean = true,
+    time: number = this.time
   ): Color {
     return [0, 0, 0, 0];
   }

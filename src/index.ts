@@ -760,8 +760,7 @@ export class Layer {
    */
   seedRandom(offset: number, timeless: boolean = false): void {}
   /**
-   * @returns a random value either between `0` and `1`, `0` and the first argument, or the first and second argument if two are provided.
-   * If the arguments are arrays, an equal length array of random values will be returned
+   * @returns a random value either between `0` and `1`, `0` and the first argument, or the first and second argument if two are provided. If the arguments are arrays, an equal length array of random values will be returned
    * @param minValOrArray If only one argument is provided, the max value for the random number, otherwise the minimum value
    * @param maxValOrArray The maximum value to return
    */
@@ -772,8 +771,7 @@ export class Layer {
     return minValOrArray || 0;
   }
   /**
-   * @returns a random value with a gaussian distribution either between `0` and `1`, `0` and the first argument, or the first and second argument if two are provided.
-   * If the arguments are arrays, an equal length array of random values will be returned
+   * @returns a random value with a gaussian distribution either between `0` and `1`, `0` and the first argument, or the first and second argument if two are provided. If the arguments are arrays, an equal length array of random values will be returned
    * @param minValOrArray If only one argument is provided, the max value for the random number, otherwise the minimum value
    * @param maxValOrArray The maximum value to return
    */
@@ -791,6 +789,14 @@ export class Layer {
   noise(valOrArray: number | []): number {
     return 1;
   }
+  /**
+   * @returns A given value, mapped from one range to another, clamped to the output range. If only 3 parameters are given, the input range is `0` to `1` and the given values are used for the output range.
+   * @param t The input value to be re-mapped
+   * @param tMin The inputs low floor
+   * @param tMax The inputs high ceiling
+   * @param value1 The output floor
+   * @param value2 The output ceiling
+   */
   linear(
     t: number,
     tMin: number,
@@ -800,6 +806,14 @@ export class Layer {
   ): number | [] {
     return value1 || tMin;
   }
+  /**
+   * @returns A given value, mapped from one range to another, clamped to the output range. The mapping will ease in and out so it reaches the output range with a velocity of `0`. If only 3 parameters are given, the input range is `0` to `1` and the given values are used for the output range.
+   * @param t The input value to be re-mapped
+   * @param tMin The inputs low floor
+   * @param tMax The inputs high ceiling
+   * @param value1 The output floor
+   * @param value2 The output ceiling
+   */
   ease(
     t: number,
     tMin: number,

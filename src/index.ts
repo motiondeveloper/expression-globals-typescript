@@ -62,7 +62,16 @@ export class Comp {
   readonly shutterAngle: number = 180;
   readonly bgColor: Color = [1, 1, 1, 1];
   readonly pixelAspect: number = 1;
-  layer(indexOrOtherLayer: number | string, relIndex?: number): Layer {
+  /**
+   * Gets a layer in the composition
+   * @param indexOrOtherLayer The index or name of the layer to return, or a Layer object if using the relative index
+   * @param relIndex Used when a layer is provided for the first input, the relative index from the given Layer
+   * @returns The requested Layer object
+   */
+  layer<T extends number | string | Layer>(
+    indexOrOtherLayer: T,
+    relIndex?: T extends Layer ? number : undefined
+  ): Layer {
     return thisLayer;
   }
 }
@@ -445,12 +454,33 @@ export class Layer {
   readonly transform?: Transform = new Transform();
   readonly text?: Text = new Text();
   readonly materialOption?: MaterialOptions = new MaterialOptions();
+  /**
+   * Transforms a given vector from the layer's space to the composition space
+   *
+   * @param vec The vector to transform
+   * @param time The time to sample the vector
+   * @returns The vector in the composition space
+   */
   toComp(vec: Vector, time: number = this.time): Vector {
     return vec;
   }
+  /**
+   * Transforms a given vector from the compositions space to the layer's space
+   *
+   * @param vec The vector to transform
+   * @param time The time to sample the vector
+   * @returns The vector in the layer's space
+   */
   fromComp(vec: Vector, time: number = this.time): Vector {
     return vec;
   }
+  /**
+   * Transforms a given vector from the layers space to the view-independent world space
+   *
+   * @param vec The vector to transform
+   * @param time The time to sample the number
+   * @returns The vector in world space
+   */
   toWorld(vec: Vector, time: number = this.time): Vector {
     return vec;
   }
@@ -466,24 +496,60 @@ export class Layer {
   fromWorldVec(vec: Vector, time: number = this.time): Vector {
     return vec;
   }
+  /**
+   * Projects a point located in composition space to a point on the surface of the layer (zero z-value) at the location where it appears when viewed from the active camera.
+   *
+   * @param vec The vector to transform
+   * @param time The time to sample the number
+   * @returns The vector in on the layers surface space
+   */
   fromCompToSurface(vec: Vector, time: number = this.time): Vector {
     return vec;
   }
-  sourceTime?(time: number = this.time): number {
-    return 0;
+  /**
+   * Returns the layer's source item at the given time
+   * @param time The time at which to get the source
+   * @returns The source item
+   */
+  sourceTime?(time: number = this.time): Footage {
+    return new Footage();
   }
+  /**
+   * Gets the layer's size and position at a given time
+   * @param time The time at which to get the layers bounds
+   * @param includeExtents Whether to include areas of the layer outside the bounding box. Applies to Shape Layers and Paragraph Text.
+   * @returns An object with properties for layers `top`, `left`, `width` and `height` values at the given time.
+   */
   sourceRectAtTime(
     time: number = this.time,
     includeExtents: boolean = false
   ): SourceRect {
     return new SourceRect();
   }
+  /**
+   * Get the effect on a layer with a given name or index.
+   * @param nameOrIndex The effect's name or index
+   * @returns The first effect with the given name, or at the given index
+   */
   effect(nameOrIndex: number | string): Effect {
     return new Effect();
   }
+  /**
+   * Get the mask on a layer with a given name or index.
+   * @param nameOrIndex The mask's name or index
+   * @returns The first mask with the given name, or at the given index
+   */
   mask(nameOrIndex: number | string): Mask {
     return new Mask();
   }
+  /**
+   * Sample a layers color at a given point
+   * @param point The center point of the sampling area, in layer space
+   * @param radius Defines the sample area size, the horizontal and vertical distance from the center
+   * @param postEffect Whether to sample the layer after effects and masks are applied
+   * @param time The time at which to sample
+   * @returns The average color of the layer in the sample area
+   */
   sampleImage(
     point: Vector2D,
     radius: Vector2D = [0.5, 0.5],
@@ -492,34 +558,71 @@ export class Layer {
   ): Color {
     return [0, 0, 0, 0];
   }
+  /**
+   * Convert a given value in degrees to radians
+   * @param degrees The value to convert
+   * @returns The value radians
+   */
   degreesToRadians(degrees: number): number {
     return degrees;
   }
+  /**
+   * Convert a given value in radians to degrees
+   * @param radians The value to convert
+   * @returns The value radians
+   */
   radiansToDegrees(radians: number): number {
     return radians;
   }
+  /**
+   * Gets the footage object for the item with the provided name
+   * @param name The file name of the footage item
+   * @returns The relevant footage item
+   */
   footage(name: string): Footage {
     return new Footage();
   }
-  layer(indexOrOtherLayer: string | number, relIndex?: number) {
-    return thisComp.layer(indexOrOtherLayer, relIndex);
-  }
-  comp(index: number | string) {
+  /**
+   * Retrieves a composition by name
+   * @param name The name of the composition
+   * @returns The composition with the given name
+   */
+  comp(name: string): Comp {
     return thisComp;
   }
+  /**
+   * Converts a given time in seconds to an integer amount of frames
+   * @param t The time to convert in seconds
+   * @param fps Frames per second to calculate with, defaulting to the compositions frame rate
+   * @param isDuration Whether `t` represents a duration rather than an absolute time. Durations are rounded away from zero rather than down.
+   * @returns The time in frames
+   */
   timeToFrames(
     t: number = this.time + thisComp.displayStartTime,
     fps: number = 1.0 / thisComp.frameDuration,
     isDuration: boolean = false
   ): number {
-    return this.time * thisComp.frameDuration;
+    return Math.floor(t * fps);
   }
+  /**
+   * Converts a number of frames to time in seconds
+   * @param frames The frame count to convert
+   * @param fps The frames per second use in the calculation
+   * @returns The given frames as time
+   */
   framesToTime(
     frames: number,
     fps: number = 1.0 / thisComp.frameDuration
   ): number {
     return frames * thisComp.frameDuration;
   }
+  /**
+   * Converts the given time value to a timecode string (e.g. `"00:00:00:00"`)
+   * @param t The time to convert
+   * @param timecodeBase The frames per second to use in the calculation
+   * @param isDuration Whether `t` represents a duration rather than an absolute time. Durations are rounded away from zero rather than down.
+   * @returns The time as a timecode string
+   */
   timeToTimecode(
     t: number = this.time + thisComp.displayStartTime,
     timecodeBase: number = 30,
@@ -527,6 +630,12 @@ export class Layer {
   ): string {
     return "00:00:00:00";
   }
+  /**
+   * Converts a given time value to a NTSC timecode string
+   * @param t The time to convert
+   * @param ntscDropFrame
+   * @param isDuration Whether `t` represents a duration rather than an absolute time. Durations are rounded away from zero rather than down.
+   */
   timeToNTSCTimecode(
     t: number = this.time + thisComp.displayStartTime,
     ntscDropFrame: boolean = false,
@@ -534,6 +643,13 @@ export class Layer {
   ) {
     return "00:00:00:00";
   }
+  /**
+   * Converts a given time in seconds to a string representing feet of film and frames.
+   * @param t The time to convert
+   * @param fps Frame rate to use for the conversion
+   * @param framesPerFoot Number of frames in one foot of film
+   * @param isDuration Whether `t` represents a duration rather than an absolute time. Durations are rounded away from zero rather than down.
+   */
   timeToFeetAndFrames(
     t: number = this.time + thisComp.displayStartTime,
     fps: number = 1.0 / thisComp.frameDuration,
@@ -542,6 +658,13 @@ export class Layer {
   ): string {
     return "00:00:00:00";
   }
+  /**
+   * Converts a given time in seconds to the current time display format of the Project.
+   * @param t The time to convert
+   * @param fps Frame rate to use for the conversion
+   * @param isDuration Whether `t` represents a duration rather than an absolute time. Durations are rounded away from zero rather than down.
+   * @param ntscDropFrame
+   */
   timeToCurrentFormat(
     t: number = this.time + thisComp.displayStartTime,
     fps: number = 1.0 / thisComp.frameDuration,
@@ -550,17 +673,39 @@ export class Layer {
   ): string {
     return "0000";
   }
+  /**
+   * Adds two vectors
+   */
   add(vec1: Vector, vec2: Vector): Vector {
-    return vec1;
+    const maxLength = Math.max(vec1.length, vec2.length);
+    return new Array(maxLength).map((_, index) => {
+      return (vec1[index] ?? 0) + (vec2[index] ?? 0);
+    }) as Vector;
   }
+  /**
+   * Subtracts two vectors
+   */
   sub(vec1: Vector, vec2: Vector): Vector {
-    return vec1;
+    const maxLength = Math.max(vec1.length, vec2.length);
+    return new Array(maxLength).map((_, index) => {
+      return (vec1[index] ?? 0) - (vec2[index] ?? 0);
+    }) as Vector;
   }
+  /**
+   * Multiplies a vector by a given scalar amount
+   * @param vec1 The vector to multiply
+   * @param amount The amount to multiply by
+   */
   mul(vec1: Vector, amount: number): Vector {
-    return vec1;
+    return vec1.map((el) => (el ?? 0) * amount) as Vector;
   }
+  /**
+   * Divides a vector by a given scalar amount
+   * @param vec1 The vector to divide
+   * @param amount The amount to divide by
+   */
   div(vec1: Vector, amount: number): Vector {
-    return vec1;
+    return vec1.map((el) => (el ?? 0) / amount) as Vector;
   }
   clamp(value: number | [], limit1: number, limit2: number): number | [] {
     return value;

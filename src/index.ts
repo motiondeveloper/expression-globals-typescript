@@ -707,16 +707,35 @@ export class Layer {
   div(vec1: Vector, amount: number): Vector {
     return vec1.map((el) => (el ?? 0) / amount) as Vector;
   }
-  clamp(value: number | [], limit1: number, limit2: number): number | [] {
+  /**
+   * Constrains a given number, or each element of an array, to fall within a a given range
+   * @param value Array or number to constrain
+   * @param limit1 Lower limit
+   * @param limit2 Upper limit
+   */
+  clamp<T extends number | number[]>(
+    value: T,
+    limit1: number,
+    limit2: number
+  ): T {
     return value;
   }
+  /**
+   * @returns the dot (inner) product of two vectors
+   */
   dot(vec1: Vector, vec2: Vector): Vector {
     return vec1;
   }
+  /**
+   * @returns the cross product of two vectors
+   */
   cross(vec1: Vector, vec2: Vector): Vector {
     return vec1;
   }
-  normalize(vec1: Vector, vec2: Vector): Vector {
+  /**
+   * @returns The given vector normalized so it has a length of 1
+   */
+  normalize(vec1: Vector): Vector {
     return [1, 1];
   }
   length(point1: Vector, point2?: Vector): number {

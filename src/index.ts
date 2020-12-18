@@ -738,22 +738,56 @@ export class Layer {
   normalize(vec1: Vector): Vector {
     return [1, 1];
   }
+  /**
+   * @returns The length of a given vector, or if two vectors are provided the distance between them
+   */
   length(point1: Vector, point2?: Vector): number {
     return 1;
   }
+  /**
+   * Used to orient a layer towards a given point in 3D space
+   * @param fromPoint The location in world space of the layer you want to orient
+   * @param atPoint The point in world space you want to point the layer at
+   * @returns An orientation value that can be used to orient the layer so that the z-axis points at the `atPoint`
+   */
   lookAt(fromPoint: Vector, atPoint: Vector): Vector3D {
     return [0, 0, 0];
   }
+  /**
+   * Used to modify the random seed for an expression
+   * @param offset A value used to modify the random seed
+   * @param timeless Whether the random seed should be consistent across time
+   */
   seedRandom(offset: number, timeless: boolean = false): void {}
-  random(minValOrArray: number | [], maxValOrArray: number | []): number | [] {
-    return minValOrArray;
-  }
-  gaussRandom(
-    minValOrArray: number | [],
-    maxValOrArray: number | []
+  /**
+   * @returns a random value either between `0` and `1`, `0` and the first argument, or the first and second argument if two are provided.
+   * If the arguments are arrays, an equal length array of random values will be returned
+   * @param minValOrArray If only one argument is provided, the max value for the random number, otherwise the minimum value
+   * @param maxValOrArray The maximum value to return
+   */
+  random(
+    minValOrArray?: number | [],
+    maxValOrArray?: number | []
   ): number | [] {
-    return minValOrArray;
+    return minValOrArray || 0;
   }
+  /**
+   * @returns a random value with a gaussian distribution either between `0` and `1`, `0` and the first argument, or the first and second argument if two are provided.
+   * If the arguments are arrays, an equal length array of random values will be returned
+   * @param minValOrArray If only one argument is provided, the max value for the random number, otherwise the minimum value
+   * @param maxValOrArray The maximum value to return
+   */
+  gaussRandom(
+    minValOrArray?: number | [],
+    maxValOrArray?: number | []
+  ): number | [] {
+    return minValOrArray || 0;
+  }
+  /**
+   * Used to get a random value via Perlin noise, where inputs values that are close together will result in output values that are closer together.
+   * @param valOrArray The noise input value
+   * @returns A value between `-1` and `1`
+   */
   noise(valOrArray: number | []): number {
     return 1;
   }

@@ -9,7 +9,7 @@ export type SourceData = any[];
 
 // Global objects, attributes, and methods
 export class Key {
-  value: string = "key value";
+  value: Value = "key value";
   time: number = 0;
   index: number = 1;
 }

@@ -823,6 +823,14 @@ export class Layer {
   ): number | [] {
     return value1 || tMin;
   }
+  /**
+   * @returns A given value, mapped from one range to another, clamped to the output range. The mapping will ease out with a velocity of `0`. If only 3 parameters are given, the input range is `0` to `1` and the given values are used for the output range.
+   * @param t The input value to be re-mapped
+   * @param tMin The inputs low floor
+   * @param tMax The inputs high ceiling
+   * @param value1 The output floor
+   * @param value2 The output ceiling
+   */
   easeIn(
     t: number,
     tMin: number,
@@ -832,6 +840,14 @@ export class Layer {
   ): number | [] {
     return value1 || tMin;
   }
+  /**
+   * @returns A given value, mapped from one range to another, clamped to the output range. The mapping will ease into the output range  with a velocity of `0`. If only 3 parameters are given, the input range is `0` to `1` and the given values are used for the output range.
+   * @param t The input value to be re-mapped
+   * @param tMin The inputs low floor
+   * @param tMax The inputs high ceiling
+   * @param value1 The output floor
+   * @param value2 The output ceiling
+   */
   easeOut(
     t: number,
     tMin: number,
@@ -841,12 +857,26 @@ export class Layer {
   ): number | [] {
     return value1 || tMin;
   }
+  /**
+   * Converts a color in RGBA space to HSLA
+   * @param rgbaArray Input RGBA array of values between 0 and 1
+   * @returns An array of hue, saturation, lightness and alpha values between 0 and 1
+   */
   rgbToHsl(rgbaArray: Color): Color {
     return [1, 1, 1, 1];
   }
+  /**
+   * Converts a color in HSLA space to RGBA
+   * @param rgbaArray Input HSLA array of values between 0 and 1
+   * @returns An array of red, green, blue and alpha values between 0 and 1
+   */
   hslToRgb(hslaArray: Color): Color {
     return [1, 1, 1, 1];
   }
+  /**
+   * Converts a color in hex triplet space to RGB, or in hex quartet space to RGBA space. For hex triplets, alpha defaults to 1.0
+   * @param hex String representing an hex triplet (6 digits, no alpha channel) or quartet (8 digits, includes alpha channel) containing only numerals or characters A–F. Optional leading characters 0x, 0X, or # are ignored. Characters beyond 8 digits are ignored.
+   */
   hexToRgb(hex: string): Color {
     return [1, 1, 1, 1];
   }
@@ -864,15 +894,35 @@ export class Footage {
   readonly pixelAspect?: number = 1;
   readonly sourceText?: string = "Source Text";
   readonly sourceData?: SourceData[] = [["source data"]];
+  /**
+   * @returns The value of specified static or dynamic data stream in a .mgJSON file
+   * @param dataPath the path in the hierarchy to the desired data stream
+   */
   dataValue?(dataPath: []): number {
     return 0;
   }
+  /**
+   * @returns The number of samples in a specified dynamic data stream in a .mgJSON file
+   * @param dataPath the path in the hierarchy to the desired dynamic data stream
+   */
   dataKeyCount?(dataPath: []): number {
     return 0;
   }
+  /**
+   * @returns The time in seconds for the samples of a specified dynamic data stream in a .mgJSON file
+   * @param dataPath The path in the hierarchy to a dynamic data stream.
+   * @param t0 The start time, in seconds, of the span from which to return samples. Defaults to startTime.
+   * @param t1 The end time, in seconds, of the span from which to return samples. Defaults to endTime.
+   */
   dataKeyTimes?(dataPath: [], t0?: number, t1?: number): number[] {
     return [0, 0];
   }
+  /**
+   * @returns The values for the samples of a specified dynamic data stream in a .mgJSON file.
+   * @param dataPath The path in the hierarchy to a dynamic data stream.
+   * @param t0 The start time, in seconds, of the span from which to return samples. Defaults to startTime.
+   * @param t1 The end time, in seconds, of the span from which to return samples. Defaults to endTime.
+   */
   dataKeyValues?(dataPath: [], t0?: number, t1?: number): number[] {
     return [0, 0];
   }

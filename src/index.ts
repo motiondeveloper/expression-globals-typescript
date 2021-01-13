@@ -8,9 +8,22 @@ export interface PathValue {}
 export type SourceData = any[];
 
 // Global objects, attributes, and methods
+
+/**
+ * Keyframe objects, which can be accessed via the property method `property.key()`
+ */
 export class Key {
+  /**
+   * The value of the keyframe
+   */
   value: Value = "key value";
+  /**
+   * The location of the keyframe in time
+   */
   time: number = 0;
+  /**
+   * The index of the keyframe, e.g. The `1`st keyframe on the property. Starts from 0.
+   */
   index: number = 1;
 }
 

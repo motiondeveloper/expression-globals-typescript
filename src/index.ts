@@ -16,64 +16,151 @@ export class Key {
   /**
    * The value of the keyframe
    */
-  value: Value = "key value";
+  readonly value: Value = "key value";
   /**
    * The location of the keyframe in time
    */
-  time: number = 0;
+  readonly time: number = 0;
   /**
    * The index of the keyframe, e.g. The `1`st keyframe on the property. Starts from 0.
    */
-  index: number = 1;
+  readonly index: number = 1;
 }
 
 export class Project {
-  fullPath: string = "path/to/project/file";
-  bitsPerChannel: "8" | "16" | "32" = "8";
-  linearBlending: boolean = true;
+  /**
+   * The platform-specific absolute file path, including the project file name. If the project has not been saved, it returns an empty string.
+   */
+  readonly fullPath: string = "path/to/project/file";
+  /**
+   * The color depth of the project in bits per channel (bpc), as set in Project Settings > Color Management
+   */
+  readonly bitsPerChannel: "8" | "16" | "32" = "8";
+  /**
+   * The state of the Blend Colors Using 1.0 Gamma option in Project Settings > Color Management
+   */
+  readonly linearBlending: boolean = true;
 }
 
 export interface MarkerParam {
-  [id: string]: any;
+  [id: string]: Value;
 }
 
-export class Marker {
+/**
+ * Composition or Layer marker objects
+ */
+export class MarkerKey {
   readonly time: number = 0;
   readonly index: number = 1;
+  /**
+   * Duration, in seconds, of marker.
+   */
   readonly duration: number = 0;
+  /**
+   * Contents of Comment field in marker dialog box.
+   */
   readonly comment: string = "Marker comment";
+  /**
+   * Contents of Chapter field in marker dialog box.
+   */
   readonly chapter: string = "Chapter 1";
+  /**
+   * Contents of URL field in marker dialog box.
+   */
   readonly url: string = "URL";
+  /**
+   * Contents of Frame Target field in marker dialog box.
+   */
   readonly frameTarget: string = "Frame Target";
+  /**
+   * Setting for cue point type in marker dialog box. True for Event; false for Navigation.
+   */
   readonly eventCuePoint: boolean = false;
+  /**
+   * Contents of cue point Name field in marker dialog box.
+   */
   readonly cuePointName: string = "Cue Point Name";
+  /**
+   * Contents of Parameter Name and Parameter Value fields in marker dialog box.
+
+  For example, if you have a parameter named “background color”, then you can use the following expression to access its value at the nearest marker:  thisComp.marker.nearestKey(time).parameters["background color"]
+   */
   readonly parameters: MarkerParam = {};
+  /**
+   * Whether the marker represents a protected region
+   */
   readonly protectedRegion: boolean = false;
 }
 
 export class MarkerProperty {
+  /**
+   * The total number of composition markers in the composition.
+   */
   readonly numKeys: number = 1;
-  key(index: number | string): Marker {
-    return new Marker();
+  /**
+   * @returns The `Marker` object with the specified name or index
+   * @param indexOrName Either the index or name (the value of the commend field) of the marker
+   */
+  key(indexOrName: number | string): MarkerKey {
+    return new MarkerKey();
   }
-  nearestKey(t: number): Marker {
-    return new Marker();
+  /**
+   * @returns The marker that is nearest in time to `t`
+   * @param t Time value to get the marker closest to
+   */
+  nearestKey(t: number): MarkerKey {
+    return new MarkerKey();
   }
 }
 
 export class Comp {
+  /**
+   * The name of the composition.
+   */
   readonly name: string = "Comp Base";
+  /**
+   * The number of layers in the composition.
+   */
   readonly numLayers: number = 1;
-  readonly activeCamera: Camera | null = null;
+  /**
+   * The Camera object for the camera through which the composition is rendered at the current frame. This camera is not necessarily the camera through which you are looking in the Composition panel.
+   */
+  readonly activeCamera: Camera = new Camera();
+  /**
+   * The composition width in pixels
+   */
   readonly width: number = 1920;
+  /**
+   * The composition height in pixels
+   */
   readonly height: number = 1080;
+  /**
+   * The composition duration in seconds
+   */
   readonly duration: number = 10;
+  /**
+   * Whether the timecode is in drop-frame format
+   */
   readonly ntscDropFrame: boolean = false;
+  /**
+   * The composition start time in seconds
+   */
   readonly displayStartTime: number = 0;
+  /**
+   * The duration of a frame, in seconds
+   */
   readonly frameDuration: number = 0.04;
-  readonly frameRate: number = 25;
+  /**
+   * The shutter-angle of the composition, in degrees
+   */
   readonly shutterAngle: number = 180;
+  /**
+   * The background color of the composition
+   */
   readonly bgColor: Color = [1, 1, 1, 1];
+  /**
+   * The pixel aspect ratio of the composition
+   */
   readonly pixelAspect: number = 1;
   /**
    * Gets a layer in the composition
@@ -89,8 +176,18 @@ export class Comp {
   }
 }
 
+/**
+ * Groups of properties such as "Transform"
+ */
 export class PropertyGroup {
+  /**
+   * The name of the property group, e.g. `"Transform"`
+   */
   readonly name: string = "property group base";
+  /**
+   * The number of properties in the group
+   */
+  readonly numProperties: number = 1;
   constructor(groupName: string) {
     this.name = groupName;
   }
@@ -106,41 +203,9 @@ export type Value =
   | Color
   | PathValue;
 
-export class Property<T extends Value> {
-  readonly velocity: number | Vector = 0;
-  readonly speed: number | Vector = 0;
+class Property<PropertyValueType extends Value> {
   readonly numKeys: number = 0;
   readonly propertyIndex: number = 0;
-  valueAtTime(time: number): Value {
-    return this.value;
-  }
-  velocityAtTime(time: number): number | Vector {
-    return this.velocity;
-  }
-  speedAtTime(time: number): number | Vector {
-    return this.speed;
-  }
-  wiggle(
-    freq: number,
-    amp: number,
-    octaves?: number,
-    amp_mult?: number,
-    time?: number
-  ): Value {
-    return this.value;
-  }
-  temporalWiggle(
-    freq: number,
-    amp: number,
-    octaves?: number,
-    amp_mult?: number,
-    time?: number
-  ): Value {
-    return this.value;
-  }
-  smooth(width?: number, samples?: number, time?: number): Value {
-    return this.value;
-  }
   loopIn(type?: loopType, numKeyframes?: number): Value {
     return this.value;
   }
@@ -160,9 +225,49 @@ export class Property<T extends Value> {
     return new Key();
   }
   propertyGroup(countUp: number): PropertyGroup {
-    return new PropertyGroup("property group from function");
+    return new PropertyGroup("Default property propertyGroup");
   }
-  constructor(readonly value: T, readonly name: string = "Property name") {}
+
+  // Numeric Value methods & Properties
+  // TODO: These should be undefined if the `PropertyValueType`
+  // is not numeric
+  readonly velocity: PropertyValueType = this.value;
+  velocityAtTime(time: number): PropertyValueType {
+    return this.velocity;
+  }
+  readonly speed: PropertyValueType = this.value;
+  speedAtTime(time: number): PropertyValueType {
+    return this.speed;
+  }
+  valueAtTime(time: number): PropertyValueType {
+    return this.value;
+  }
+  wiggle(
+    freq: number,
+    amp: number,
+    octaves?: number,
+    amp_mult?: number,
+    time?: number
+  ): PropertyValueType {
+    return this.value;
+  }
+  temporalWiggle(
+    freq: number,
+    amp: number,
+    octaves?: number,
+    amp_mult?: number,
+    time?: number
+  ): Value {
+    return this.value;
+  }
+  smooth(width?: number, samples?: number, time?: number): Value {
+    return this.value;
+  }
+
+  constructor(
+    readonly value: PropertyValueType,
+    readonly name: string = "Property name"
+  ) {}
 }
 
 export class PathProperty<T> extends Property<T> {

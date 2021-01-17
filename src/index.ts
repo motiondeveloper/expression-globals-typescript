@@ -204,26 +204,32 @@ export type Value =
   | PathValue;
 
 class Property<PropertyValueType extends Value> {
+  /**
+   * The number of keyframes on the property
+   */
   readonly numKeys: number = 0;
+  /**
+   * The index number of the property in it's property group
+   */
   readonly propertyIndex: number = 0;
-  loopIn(type?: loopType, numKeyframes?: number): Value {
-    return this.value;
-  }
-  loopOut(type?: loopType, numKeyframes?: number): Value {
-    return this.value;
-  }
-  loopInDuration(type?: loopType, duration?: number): Value {
-    return this.value;
-  }
-  loopOutDuration(type?: loopType, duration?: number): Value {
-    return this.value;
-  }
-  key(indexOrName: number | string): Key {
+  /**
+   * @returns The keyframe at the specified index on the property
+   * @param index The index of the keyframe to return (e.g. the `1`st keyframe)
+   */
+  key(index: number): Key {
     return new Key();
   }
+  /**
+   * @returns The marker that is nearest in time to `t`
+   * @param t Time value to get the marker closest to
+   */
   nearestKey(time: number): Key {
     return new Key();
   }
+  /**
+   * @returns The group of properties (`PropertyGroup` object) relative to the property of which the expression is written
+   * @param countUp The number of levels in the property hierarchy to ascend, e.g. `countUp = 1` will return the parent `PropertyGroup`.
+   */
   propertyGroup(countUp: number): PropertyGroup {
     return new PropertyGroup("Default property propertyGroup");
   }
@@ -231,6 +237,52 @@ class Property<PropertyValueType extends Value> {
   // Numeric Value methods & Properties
   // TODO: These should be undefined if the `PropertyValueType`
   // is not numeric
+
+  /**
+   * Loops a segment of time that is measured from the first keyframe on the layer forward toward the Out point of the layer. The loop plays from the In point of the layer.
+   * @param type `"cycle"`: (default) Repeats the specified segment.
+   * `"pingpong"`: Repeats the specified segment, alternating between forward and backward.
+   * `"offset"`: Repeats the specified segment, but offsets each cycle by the difference in the value of the property at the start and end of the segment, multiplied by the number of times the segment has looped.
+   * `"continue"`: Does not repeat the specified segment, but continues to animate a property based on the velocity at the first or last keyframe.
+   * @param numKeyframes determines what segment is looped: The segment looped is the portion of the layer from the first keyframe to the numKeyframes+1 keyframe. The default value of 0 means that all keyframes loop
+   */
+  loopIn(type: loopType = "cycle", numKeyframes: number = 0): Value {
+    return this.value;
+  }
+  /**
+   * Loops a segment of time that is measured from the last keyframe on the layer back toward the In point of the layer. The loop plays until the Out point of the layer.
+   * @param type `"cycle"`: (default) Repeats the specified segment.
+   * `"pingpong"`: Repeats the specified segment, alternating between forward and backward.
+   * `"offset"`: Repeats the specified segment, but offsets each cycle by the difference in the value of the property at the start and end of the segment, multiplied by the number of times the segment has looped.
+   * `"continue"`: Does not repeat the specified segment, but continues to animate a property based on the velocity at the first or last keyframe.
+   * @param numKeyframes determines what segment is looped: The segment looped is the portion of the layer from the last keyframe to the `thisProperty.numKeys - numKeyframes` keyframe. The default value of 0 means that all keyframes loop
+   */
+  loopOut(type: loopType = "cycle", numKeyframes: number = 0): Value {
+    return this.value;
+  }
+  /**
+   * Loops a segment of time that is measured from the first keyframe on the layer forward toward the Out point of the layer. The loop plays from the In point of the layer.
+   * @param type `"cycle"`: (default) Repeats the specified segment.
+   * `"pingpong"`: Repeats the specified segment, alternating between forward and backward.
+   * `"offset"`: Repeats the specified segment, but offsets each cycle by the difference in the value of the property at the start and end of the segment, multiplied by the number of times the segment has looped.
+   * `"continue"`: Does not repeat the specified segment, but continues to animate a property based on the velocity at the first or last keyframe.
+   * @param duration The number of composition seconds in a segment to loop; the specified range is measured from the first keyframe
+   */
+  loopInDuration(type: loopType = "cycle", duration: number = 0): Value {
+    return this.value;
+  }
+  /**
+   * Loops a segment of time that is measured from the last keyframe on the layer back toward the In point of the layer. The loop plays until the Out point of the layer.
+   * @param type `"cycle"`: (default) Repeats the specified segment.
+   * `"pingpong"`: Repeats the specified segment, alternating between forward and backward.
+   * `"offset"`: Repeats the specified segment, but offsets each cycle by the difference in the value of the property at the start and end of the segment, multiplied by the number of times the segment has looped.
+   * `"continue"`: Does not repeat the specified segment, but continues to animate a property based on the velocity at the first or last keyframe.
+   * @param duration The number of composition seconds in a segment to loop; the specified range is measured from the last keyframe backwards.
+   */
+  loopOutDuration(type: loopType = "cycle", duration: number = 0): Value {
+    return this.value;
+  }
+
   readonly velocity: PropertyValueType = this.value;
   velocityAtTime(time: number): PropertyValueType {
     return this.velocity;
@@ -568,7 +620,7 @@ export class Layer {
   readonly audioActive?: boolean = true;
   readonly audioLevels?: Property<number> = new Property(0, "Audio Levels");
   readonly timeRemap?: Property<number> = new Property(0, "Time Remap");
-  readonly marker?: MarkerProperty;
+  readonly marker?: MarkerProperty = new MarkerProperty();
   readonly transform?: Transform = new Transform();
   readonly text?: Text = new Text();
   readonly materialOption?: MaterialOptions = new MaterialOptions();

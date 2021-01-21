@@ -282,37 +282,79 @@ class Property<PropertyValueType extends Value> {
   loopOutDuration(type: loopType = "cycle", duration: number = 0): Value {
     return this.value;
   }
-
+  /**
+   * The temporal velocity value at the current time. For spatial properties, such as Position, it returns the tangent vector value. The result is the same dimension as the property.
+   */
   readonly velocity: PropertyValueType = this.value;
+  /**
+   * @returns The temporal velocity value at the specified time. For spatial properties, such as Position, it returns the tangent vector value. The result is the same dimension as the property.
+   * @param time The composition time in seconds to get the velocity at
+   */
   velocityAtTime(time: number): PropertyValueType {
     return this.velocity;
   }
+  /**
+   * A 1D, positive speed value equal to the speed at which the property is changing at the default time. This element can be used only for spatial properties.
+   */
   readonly speed: PropertyValueType = this.value;
+  /**
+   * @returns  A 1D, positive speed value equal to the speed at which the property is changing at the specified time. This element can be used only for spatial properties.
+   * @param time The composition time in seconds to get the speed at
+   */
   speedAtTime(time: number): PropertyValueType {
     return this.speed;
   }
+  /**
+   * Returns the value for the property at the specified time
+   * @param time THe composition time in seconds to get the value at
+   */
   valueAtTime(time: number): PropertyValueType {
     return this.value;
   }
+  /**
+   * Modifies the property value randomly over time.
+   * @param freq The rate at which the value changes in wiggles per second
+   * @param amp How much the value should change, in units of the original property value (e.g. `1` by 100% of the original value)
+   * @param octaves How much detail the wiggle has, which is driven by the number of "octaves" of noise to multiply together. Higher values will have more detail
+   * @param amp_mult The amount the given amplitude is multiplied by for each octave, which controls the falloff of the upper harmonics ("octaves").
+   * @param time The time at which the value is sampled for use within the wiggle
+   */
   wiggle(
     freq: number,
     amp: number,
-    octaves?: number,
-    amp_mult?: number,
-    time?: number
+    octaves: number = 1,
+    amp_mult: number = 0.5,
+    time: number = thisLayer.time
   ): PropertyValueType {
     return this.value;
   }
+  /**
+   * Samples the property value at a time which is wiggled
+   * @param freq The rate at which the value changes in wiggles per second
+   * @param amp How much the value should change, in units of the original property value (e.g. `1` by 100% of the original value)
+   * @param octaves How much detail the wiggle has, which is driven by the number of "octaves" of noise to multiply together. Higher values will have more detail
+   * @param amp_mult The amount the given amplitude is multiplied by for each octave, which controls the falloff of the upper harmonics ("octaves").
+   * @param time The time at which the value is sampled for use within the wiggle
+   */
   temporalWiggle(
     freq: number,
     amp: number,
-    octaves?: number,
-    amp_mult?: number,
-    time?: number
+    octaves: number = 1,
+    amp_mult: number = 0.5,
+    time: number = thisLayer.time
   ): Value {
     return this.value;
   }
-  smooth(width?: number, samples?: number, time?: number): Value {
+  /**
+   * Smooths the property values over time, converting large, brief deviations in the value to smaller, more evenly distributed deviations. This smoothing is accomplished by applying a box filter to the value of the property at the specified time.
+   * @param width The range of time (in seconds) over which the filter is averaged.
+   * @param samples The number of discrete samples evenly spaced over time; use a larger value for greater smoothness (but decreased performance). Generally, you’ll want samples to be an odd number so that the value at the current time is included in the average.
+   */
+  smooth(
+    width: number = 0.2,
+    samples: number = 5,
+    time: number = thisLayer.time
+  ): Value {
     return this.value;
   }
 

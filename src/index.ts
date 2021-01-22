@@ -365,13 +365,37 @@ class Property<PropertyValueType extends Value> {
 }
 
 export class PathProperty<T> extends Property<T> {
-  readonly isClosed: boolean = true;
+  /**
+   * Creates a path object from a set of points and tangents.
+   * @param points An array of number pair arrays representing x,y coordinates of the path points. The array length must be at least 1, and can be of any greater length.
+   * @param inTangents An array containing number pair arrays representing the `[x,y]` offset coordinates of the tangent handles to the path points. Required unless no parameters are passed (i.e., `createPath()`). The array length must be the same as points, or you can pass an empty array (`[]`), which will assume the same length as points and `[0,0]` for all tangents.
+   * @param outTangents See `inTangents`
+   * @param isClosed Determines if the mask is closed. If true, the last point will be connected to the first point.
+   */
   createPath(
-    points: Points,
-    inTangents: Points | [],
-    outTangent: Points | [],
-    isClosed: boolean
+    points: Points = [
+      [0, 0],
+      [100, 0],
+      [100, 100],
+      [0, 100],
+    ],
+    inTangents: Points | [] = [],
+    outTangents: Points | [] = [],
+    is_closed: boolean = true
   ): PathValue {
+    return points;
+  }
+  /**
+   * @returns Whether a path is closed (the last point connected to the first)
+   */
+  isClosed(): boolean {
+    return true;
+  }
+  /**
+   * Retrieves the points array for a path
+   * @param time The time at which to sample the path
+   */
+  points(time: number = thisLayer.time): Points {
     return [
       [0, 0],
       [0, 0],
@@ -379,7 +403,7 @@ export class PathProperty<T> extends Property<T> {
       [0, 0],
     ];
   }
-  points(time?: number): Vector2D[] {
+  inTangents(time?: number): Points {
     return [
       [0, 0],
       [0, 0],
@@ -387,15 +411,7 @@ export class PathProperty<T> extends Property<T> {
       [0, 0],
     ];
   }
-  inTangents(time?: number): Vector2D[] {
-    return [
-      [0, 0],
-      [0, 0],
-      [0, 0],
-      [0, 0],
-    ];
-  }
-  outTangents(time?: number): Vector2D[] {
+  outTangents(time?: number): Points {
     return [
       [0, 0],
       [0, 0],

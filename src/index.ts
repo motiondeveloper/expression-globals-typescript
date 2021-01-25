@@ -403,6 +403,10 @@ export class PathProperty<T> extends Property<T> {
       [0, 0],
     ];
   }
+  /**
+   * Retrieves the path's in tangent point array
+   * @param time The time at which to sample the path
+   */
   inTangents(time?: number): Points {
     return [
       [0, 0],
@@ -411,6 +415,10 @@ export class PathProperty<T> extends Property<T> {
       [0, 0],
     ];
   }
+  /**
+   * Retrieves the path's out tangent point array
+   * @param time The time at which to sample the path
+   */
   outTangents(time?: number): Points {
     return [
       [0, 0],
@@ -419,12 +427,30 @@ export class PathProperty<T> extends Property<T> {
       [0, 0],
     ];
   }
-  pointOnPath(percentage?: number, time?: number): Vector2D {
+  /**
+   * Get the x,y coordinates of an arbitrary point along a path.
+   * @param percentage How far along the path to get the point, between 0 and 1.
+   * @param time The time at which to sample the path
+   */
+  pointOnPath(
+    percentage: number = 0.5,
+    time: number = thisLayer.time
+  ): Vector2D {
     return [0, 0];
   }
+  /**
+   * Get the calculated x,y coordinates of the outgoing tangent handle for an arbitrary point along a path.
+   * @param percentage How far along the path to get the point, between 0 and 1.
+   * @param time The time at which to sample the path
+   */
   tangentOnPath(percentage?: number, time?: number): Vector2D {
     return [0, 0];
   }
+  /**
+   * Get the calculated x,y coordinates of the normal for an arbitrary point along a path.
+   * @param percentage How far along the path to get the point, between 0 and 1.
+   * @param time The time at which to sample the path
+   */
   normalOnPath(percentage?: number, time?: number): Vector2D {
     return [0, 0];
   }
@@ -439,97 +465,230 @@ export class Transform extends PropertyGroup {
   constructor() {
     super("Transform");
   }
+  /**
+   * The anchor point value of the layer in the coordinate system of the layer (layer space).
+   */
   readonly anchorPoint: Property<Vector> = new Property([0, 0], "Anchor Point");
+  /**
+   * The position value of the layer, in world space if the layer has no parent. If the layer has a parent, it returns the position value of the layer in the coordinate system of the parent layer (in the layer space of the parent layer).
+   */
   readonly position: Property<Vector> = new Property([0, 0], "Position");
+  /**
+   * The x position value of the layer, in world space if the layer has no parent. If the layer has a parent, it returns the position value of the layer in the coordinate system of the parent layer (in the layer space of the parent layer).
+   */
   readonly xPosition: Property<number> = new Property(0, "X Position");
+  /**
+   * The y position value of the layer, in world space if the layer has no parent. If the layer has a parent, it returns the position value of the layer in the coordinate system of the parent layer (in the layer space of the parent layer).
+   */
   readonly yPosition: Property<number> = new Property(0, "Y Position");
+  /**
+   * The z position value of the layer, in world space if the layer has no parent. If the layer has a parent, it returns the position value of the layer in the coordinate system of the parent layer (in the layer space of the parent layer).
+   */
   readonly zPosition: Property<number> = new Property(0, "Z Position");
+  /**
+   * The scale value of the layer, expressed as a percentage.
+   */
   readonly scale: Property<Vector> = new Property([0, 0], "Scale");
+  /**
+   * Returns the rotation value of the layer in degrees. For a 3D layer, it returns the z rotation value in degrees.
+   */
   readonly rotation: Property<number> = new Property(0, "Rotation");
+  /**
+   * Returns the 3D orientation value, in degrees, for a 3D layer.
+   */
   readonly orientation?: Property<Vector3D> = new Property(
     [0, 0, 0],
     "Orientation"
   );
+  /**
+   * Returns the x rotation value, in degrees, for a 3D layer.
+   */
   readonly rotationX?: Property<number> = new Property(0, "X Rotation");
+  /**
+   * Returns the y rotation value, in degrees, for a 3D layer.
+   */
   readonly rotationY?: Property<number> = new Property(0, "Y Rotation");
+  /**
+   * Returns the z rotation value, in degrees, for a 3D layer.
+   */
   readonly rotationZ?: Property<number> = new Property(0, "Z Rotation");
 }
 
 export class TextStyle {
+  /**
+   * Font size of the style
+   */
   fontSize: number = 0;
+  /**
+   * Set the font size for a style
+   * @param fontSize Font size in pixels
+   */
   setFontSize(fontSize: number): TextStyle {
     this.fontSize = fontSize;
     return this;
   }
+  /**
+   * Font of the style
+   */
   font: string = "Arial";
+  /**
+   * Set the font for a style
+   * @param font The typeface to set
+   */
   setFont(font: string): TextStyle {
     this.font = font;
     return this;
   }
+  /**
+   * Set the text content of a style
+   * @param text The string to set
+   */
   setText(text: string): TextStyle {
     return this;
   }
+  /**
+   * Whether faux bold is enabled for a style
+   */
   isFauxBold: boolean = false;
+  /**
+   * Set the faux bold property for a style
+   */
   setFauxBold(isFauxBold: boolean): TextStyle {
     this.isFauxBold = isFauxBold;
     return this;
   }
+  /**
+   * Whether faux italic is enabled
+   */
   isFauxItalic: boolean = false;
+  /**
+   * Set the faux italic property for a style
+   */
   setFauxItalic(isFauxItalic: boolean): TextStyle {
     this.isFauxItalic = isFauxItalic;
     return this;
   }
+  /**
+   * Whether all caps is enabled for a style
+   */
   isAllCaps: boolean = false;
+  /**
+   * Set the all caps property for a style
+   */
   setAllCaps(isAllCaps: boolean): TextStyle {
     this.isAllCaps = isAllCaps;
     return this;
   }
+  /**
+   * Whether small caps is enabled for a style
+   */
   isSmallCaps: boolean = false;
+  /**
+   * Set the small caps property for a style
+   */
   setSmallCaps(isSmallCaps: boolean): TextStyle {
     this.isSmallCaps = isSmallCaps;
     return this;
   }
+  /**
+   * Tracking value for a style
+   */
   tracking: number = 0;
+  /**
+   * Set the tracking style for a style
+   */
   setTracking(tracking: number): TextStyle {
     this.tracking = tracking;
     return this;
   }
+  /**
+   * The leading value for a style
+   */
   leading: number = 60;
+  /**
+   * Set the leading value for a style
+   */
   setLeading(leading: number): TextStyle {
     this.leading = leading;
     return this;
   }
+  /**
+   * Whether auto leading is enabled for a style
+   */
   autoLeading: boolean = false;
+  /**
+   * Set the auto leading property for a style
+   */
   setAutoLeading(autoLeading: boolean): TextStyle {
     this.autoLeading = autoLeading;
     return this;
   }
+  /**
+   * The baseline shift value for a style
+   */
   baselineShift: number = 0;
+  /**
+   * Set the baseline shift value for a style
+   * @param baselineShift The baseline shift to set
+   */
   setBaselineShift(baselineShift: number): TextStyle {
     this.baselineShift = baselineShift;
     return this;
   }
+  /**
+   * Whether to apply a fill to the style
+   */
   applyFill: boolean = true;
+  /**
+   * Enable or disable the fill for a style
+   */
   setApplyFill(applyFill: boolean): TextStyle {
     this.applyFill = applyFill;
     return this;
   }
+  /**
+   * The fill color of a style
+   */
   fillColor: [number, number, number] = [1, 1, 1];
+  /**
+   * Set the fill color for a style
+   * @param fillColor The color to set
+   */
   setFillColor(fillColor: [number, number, number]): TextStyle {
     this.fillColor = fillColor;
     return this;
   }
+  /**
+   * Whether to apply a stroke to the style
+   */
   applyStroke: boolean = false;
+  /**
+   * Enable or disable the stroke for a style
+   */
   setApplyStroke(applyStroke: boolean): TextStyle {
     this.applyStroke = applyStroke;
     return this;
   }
+  /**
+   * The stroke colour of a style
+   */
   strokeColor: [number, number, number] = [1, 1, 1];
+  /**
+   * Set the stroke colour for a style
+   * @param strokeColor The color to set
+   */
   setStrokeColor(strokeColor: [number, number, number]): TextStyle {
     this.strokeColor = strokeColor;
     return this;
   }
+  /**
+   * The stroke width for a style
+   */
   strokeWidth: number = 0;
+  /**
+   * Set the stroke width for a style
+   * @param strokeWidth The stroke width to set
+   */
   setStrokeWidth(strokeWidth: number): TextStyle {
     this.strokeWidth = strokeWidth;
     return this;
@@ -541,6 +700,11 @@ export class SourceText extends Property<string> {
     super(value);
   }
   style = new TextStyle();
+  /**
+   * Get the style object of a text property at a character index
+   * @param characterIndex Which character to get the style at
+   * @param sampleTime The time to get the style at, defaulting to the current time
+   */
   getStyleAt(characterIndex: number, sampleTime: number = thisLayer.time) {
     return this.style;
   }
@@ -573,7 +737,7 @@ export class TextMoreOptions extends PropertyGroup {
     [0, 0],
     "Grouping Alignment"
   );
-  readonly fillANdStroke: number = 1;
+  readonly fillAndStroke: number = 1;
   readonly interCharacterBlending: number = 1;
 }
 
@@ -622,30 +786,64 @@ export class SourceRect {
 }
 
 export class Effect {
+  /**
+   * Returns true if the effect is turned on
+   */
   active: boolean = true;
+  /**
+   * @returns A property within an effect, e.g. `"Slider"`
+   * @param nameOrIndex The name or index of the property to retrieve
+   */
   param(nameOrIndex: string | number): Property<string> {
     return new Property<string>("Effect Param");
   }
 }
 
 export class Mask {
+  /**
+   * The opacity value of a mask as a percentage.
+   */
   readonly maskOpacity: Property<number> = new Property(100, "Mask Opacity");
+  /**
+   * The feather value of a mask, in pixels.
+   */
   readonly maskFeather: Property<number> = new Property(100, "Mask Feather");
+  /**
+   * The expansion value of a mask, in pixels.
+   */
   readonly maskExpansion: Property<number> = new Property(0, "Mask Expansion");
+  /**
+   * True if the mask is inverted or false if it is not.
+   */
   readonly invert: Property<boolean> = new Property(false, "Invert");
 }
 
 export class Light {
+  /**
+   * The point of interest values for a light in world space.
+   */
   readonly pointOfInterest: Property<Vector3D> = new Property(
     [0, 0, 0],
     "Point of Interest"
   );
+  /**
+   * The intensity values of a light as a percentage.
+   */
   readonly intensity: Property<number> = new Property(100, "Intensity");
+  /**
+   * The color value of a light.
+   */
   readonly color: Property<Color> = new Property([1, 1, 1, 1], "Color");
+  /**
+   * The shadow darkness value of a light as a percentage.
+   */
   readonly shadowDarkness: Property<number> = new Property(
     100,
     "Shadow Darkness"
   );
+  /**
+   * The shadow diffusion value of a light, in pixels.
+   */
   readonly shadowDiffusion: Property<number> = new Property(
     0,
     "Shadow Diffusion"
@@ -654,12 +852,53 @@ export class Light {
   readonly coneFeather?: Property<number> = new Property(50, "Cone Feather");
 }
 
-export class Camera {}
+export class Camera {
+  /**
+   * The point of interest values of a camera in world space.
+   */
+  readonly pointOfInterest: Property<Vector3D> = new Property(
+    [0, 0, 0],
+    "Point of Interest"
+  );
+  /**
+   * The zoom values of a camera in pixels
+   */
+  readonly zoom: Property<number> = new Property(1000, "Zoom");
+  /**
+   * Returns 1 if the Depth Of Field property of a camera is on, or returns 0 if the Depth Of Field property is off.
+   */
+  readonly depthOfField: Property<number> = new Property(1, "Depth of Field");
+  /**
+   * The focus distance value of a camera, in pixels.
+   */
+  readonly focusDistance: Property<number> = new Property(
+    1000,
+    "Focus Distance"
+  );
+  /**
+   * The aperture value of a camera, in pixels.
+   */
+  readonly aperture: Property<number> = new Property(4, "Aperture");
+  /**
+   * The blur level value of a camera as a percentage.
+   */
+  readonly blurLevel: Property<number> = new Property(100, "Blur Level");
+  /**
+   * True if the camera is the active camera for the composition at the current time: the Video switch for the camera layer is on, the current time is in the range from the In point of the camera layer to the Out point of the camera layer, and it is the first (topmost) such camera layer listed in the Timeline panel. False otherwise.
+   */
+  readonly active: boolean = true;
+}
 
 const thisComp = new Comp();
 
 export class Layer {
+  /**
+   * The composition time, in seconds, at which the expression is being evaluated.
+   */
   readonly time: number = 0;
+  /**
+   * The project color depth value. For example, colorDepth returns 16 when the project color depth is 16 bits per channel.
+   */
   readonly colorDepth: number = 8;
   readonly name: string = "Layer name";
   readonly source?: Comp | Footage = thisComp;

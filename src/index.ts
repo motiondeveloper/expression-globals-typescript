@@ -50,8 +50,6 @@ export interface MarkerParam {
  * Composition or Layer marker objects
  */
 export class MarkerKey {
-  readonly time: number = 0;
-  readonly index: number = 1;
   /**
    * Duration, in seconds, of marker.
    */
@@ -900,26 +898,92 @@ export class Layer {
    * The project color depth value. For example, colorDepth returns 16 when the project color depth is 16 bits per channel.
    */
   readonly colorDepth: number = 8;
+  /**
+   * The name of the layer
+   */
   readonly name: string = "Layer name";
+  /**
+   * The source Comp or source Footage object for the layer. Default time is adjusted to the time in the source
+   */
   readonly source?: Comp | Footage = thisComp;
+  /**
+   * The width of the layer in pixels, same as `source.width`
+   */
   readonly width: number = 1920;
+  /**
+   * The height of the layer in pixels, same as `source.height`
+   */
   readonly height: number = 1080;
+  /**
+   * The index number of the layer in the composition
+   */
   readonly index: number = 0;
+  /**
+   * The parent Layer object of the layer, if it has one
+   */
   readonly parent?: Layer | Light | Camera = thisLayer;
+  /**
+   * Whether the layer has a parent layer
+   */
   readonly hasParent: boolean = true;
+  /**
+   * The in point of the layer, in seconds
+   */
   readonly inPoint: number = 0;
+  /**
+   * The out point of the layer in seconds
+   */
   readonly outPoint: number = 1;
+  /**
+   * The start time of the layer in seconds
+   */
   readonly startTime: number = 0;
+  /**
+   * Whether the layer has video data
+   */
   readonly hasVideo: boolean = true;
+  /**
+   * Whether the layer has audio data
+   */
   readonly hasAudio: boolean = true;
+  /**
+   * Whether the video switch is enabled, and the current time is between in the `inPoint` and `outPoint` of the layer
+   */
   readonly active: boolean = true;
+  /**
+   * Whether the video switch for the layer is enabled
+   */
   readonly enabled: boolean = true;
+  /**
+   * Whether the audio switch is enabled, and the current time is in between the `inPoint` and `outPoint` of the layer
+   */
   readonly audioActive?: boolean = true;
-  readonly audioLevels?: Property<number> = new Property(0, "Audio Levels");
+  /**
+   *  The value of the Audio Levels property of the layer, in decibels. This value is a 2D value; the first value represents the left audio channel, and the second value represents the right. The value is not the amplitude of the audio track of the source material. Instead, it is the value of the Audio Levels property, which may be affected by keyframes.
+   */
+  readonly audioLevels?: Property<Vector2D> = new Property(
+    [0, 0],
+    "Audio Levels"
+  );
+  /**
+   * The value of the Time Remap property, in seconds, if Time Remap is enabled.
+   */
   readonly timeRemap?: Property<number> = new Property(0, "Time Remap");
+  /**
+   * The marker property group object
+   */
   readonly marker?: MarkerProperty = new MarkerProperty();
+  /**
+   * The transform property group object
+   */
   readonly transform?: Transform = new Transform();
+  /**
+   * The text property group object
+   */
   readonly text?: Text = new Text();
+  /**
+   * The material options property group object
+   */
   readonly materialOption?: MaterialOptions = new MaterialOptions();
   /**
    * Transforms a given vector from the layer's space to the composition space
@@ -1352,14 +1416,41 @@ export class Layer {
 const thisLayer = new Layer();
 
 export class Footage {
+  /**
+   * The name of the footage item as shown in the project panel
+   */
   readonly name: string = "Layer Name";
+  /**
+   * The width of the footage item, in pixels
+   */
   readonly width?: number = 500;
+  /**
+   * The height of the footage item, in pixels
+   */
   readonly height?: number = 500;
+  /**
+   * The duration of the footage item, in seconds
+   */
   readonly duration?: number = 10;
+  /**
+   * The duration of a frame in the footage item, in seconds
+   */
   readonly frameDuration?: number = 0.04;
+  /**
+   * Whether the timecode is in NTSC drop-frame format
+   */
   readonly ntscDropFrame?: boolean = false;
+  /**
+   * The pixel aspect ratio of the footage
+   */
   readonly pixelAspect?: number = 1;
+  /**
+   * The contents of a JSON file as a string
+   */
   readonly sourceText?: string = "Source Text";
+  /**
+   * The data of a JSON file as an array of `sourceData` objects
+   */
   readonly sourceData?: SourceData[] = [["source data"]];
   /**
    * @returns The value of specified static or dynamic data stream in a .mgJSON file

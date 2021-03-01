@@ -12,11 +12,11 @@ export type SourceData = any[];
 /**
  * Keyframe objects, which can be accessed via the property method `property.key()`
  */
-export class Key {
+export class Key<ValueType extends Value> {
   /**
    * The value of the keyframe
    */
-  readonly value: Value = "key value";
+  readonly value: ValueType;
   /**
    * The location of the keyframe in time
    */
@@ -25,6 +25,10 @@ export class Key {
    * The index of the keyframe, e.g. The `1`st keyframe on the property. Starts from 0.
    */
   readonly index: number = 1;
+
+  constructor(keyValue: ValueType) {
+    this.value = keyValue;
+  }
 }
 
 export class Project {
@@ -201,7 +205,7 @@ export type Value =
   | Color
   | PathValue;
 
-class Property<PropertyValueType extends Value> {
+export class Property<PropertyValueType extends Value> {
   /**
    * The number of keyframes on the property
    */
@@ -214,15 +218,15 @@ class Property<PropertyValueType extends Value> {
    * @returns The keyframe at the specified index on the property
    * @param index The index of the keyframe to return (e.g. the `1`st keyframe)
    */
-  key(index: number): Key {
-    return new Key();
+  key(index: number): Key<PropertyValueType> {
+    return new Key(this.value);
   }
   /**
    * @returns The marker that is nearest in time to `t`
    * @param t Time value to get the marker closest to
    */
-  nearestKey(time: number): Key {
-    return new Key();
+  nearestKey(time: number): Key<PropertyValueType> {
+    return new Key(this.value);
   }
   /**
    * @returns The group of properties (`PropertyGroup` object) relative to the property of which the expression is written

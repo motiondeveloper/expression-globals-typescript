@@ -1211,20 +1211,14 @@ export class Layer {
   /**
    * Adds two vectors
    */
-  add(vec1: Vector, vec2: Vector): Vector {
-    const maxLength = Math.max(vec1.length, vec2.length);
-    return new Array(maxLength).map((_, index) => {
-      return (vec1[index] ?? 0) + (vec2[index] ?? 0);
-    }) as Vector;
+  add(vec1: number | Vector, vec2: number | Vector): number | Vector {
+    return vec2;
   }
   /**
    * Subtracts two vectors
    */
-  sub(vec1: Vector, vec2: Vector): Vector {
-    const maxLength = Math.max(vec1.length, vec2.length);
-    return new Array(maxLength).map((_, index) => {
-      return (vec1[index] ?? 0) - (vec2[index] ?? 0);
-    }) as Vector;
+  sub(vec1: number | Vector, vec2: number | Vector) {
+    return vec1;
   }
   /**
    * Multiplies a vector by a given scalar amount

@@ -170,10 +170,10 @@ export class Comp {
    * @param relIndex Used when a layer is provided for the first input, the relative index from the given Layer
    * @returns The requested Layer object
    */
-  layer<T extends number | string | Layer>(
-    indexOrOtherLayer: T,
-    relIndex?: T extends Layer ? number : undefined
-  ): Layer {
+  layer(index: number): Layer;
+  layer(name: string): Layer;
+  layer(otherLayer: Layer, relativeIndex: number): Layer;
+  layer(indexOrOtherLayer: number | string | Layer, relativeIndex?: number) {
     return thisLayer;
   }
 }

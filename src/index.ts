@@ -328,6 +328,7 @@ export class Property<PropertyValueType extends Value> {
     amp_mult: number = 0.5,
     time: number = thisLayer.time
   ): PropertyValueType {
+    const som = freq + amp + octaves + amp_mult + time;
     return this.value;
   }
   /**
@@ -996,7 +997,10 @@ export class Layer {
    * @param time The time to sample the vector
    * @returns The vector in the composition space
    */
-  toComp(vec: Vector, time: number = this.time): Vector {
+  toComp<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
   /**
@@ -1006,7 +1010,10 @@ export class Layer {
    * @param time The time to sample the vector
    * @returns The vector in the layer's space
    */
-  fromComp(vec: Vector, time: number = this.time): Vector {
+  fromComp<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
   /**
@@ -1016,19 +1023,34 @@ export class Layer {
    * @param time The time to sample the number
    * @returns The vector in world space
    */
-  toWorld(vec: Vector, time: number = this.time): Vector {
+  toWorld<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
-  toCompVec(vec: Vector, time: number = this.time): Vector {
+  toCompVec<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
-  fromCompVec(vec: Vector, time: number = this.time): Vector {
+  fromCompVec<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
-  toWorldVec(vec: Vector, time: number = this.time): Vector {
+  toWorldVec<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
-  fromWorldVec(vec: Vector, time: number = this.time): Vector {
+  fromWorldVec<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
   /**
@@ -1038,7 +1060,10 @@ export class Layer {
    * @param time The time to sample the number
    * @returns The vector in on the layers surface space
    */
-  fromCompToSurface(vec: Vector, time: number = this.time): Vector {
+  fromCompToSurface<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
   /**

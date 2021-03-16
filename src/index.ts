@@ -1236,13 +1236,19 @@ export class Layer {
   /**
    * Adds two vectors
    */
-  add(vec1: number | Vector, vec2: number | Vector): number | Vector {
+  add<VectorType extends Vector | Vector2D | Vector3D>(
+    vec1: VectorType,
+    vec2: VectorType
+  ): VectorType {
     return vec2;
   }
   /**
    * Subtracts two vectors
    */
-  sub(vec1: number | Vector, vec2: number | Vector) {
+  sub<VectorType extends Vector | Vector2D | Vector3D>(
+    vec1: VectorType,
+    vec2: VectorType
+  ) {
     return vec1;
   }
   /**
@@ -1250,16 +1256,26 @@ export class Layer {
    * @param vec1 The vector to multiply
    * @param amount The amount to multiply by
    */
-  mul(vec1: Vector, amount: number): Vector {
-    return vec1.map((el) => (el ?? 0) * amount) as Vector;
+  mul<VectorType extends Vector | Vector2D | Vector3D>(
+    vec1: VectorType,
+    amount: number
+  ): VectorType {
+    return vec1.map(
+      (el: number | undefined) => (el ?? 0) * amount
+    ) as VectorType;
   }
   /**
    * Divides a vector by a given scalar amount
    * @param vec1 The vector to divide
    * @param amount The amount to divide by
    */
-  div(vec1: Vector, amount: number): Vector {
-    return vec1.map((el) => (el ?? 0) / amount) as Vector;
+  div<VectorType extends Vector | Vector2D | Vector3D>(
+    vec1: VectorType,
+    amount: number
+  ): VectorType {
+    return vec1.map(
+      (el: number | undefined) => (el ?? 0) / amount
+    ) as VectorType;
   }
   /**
    * Constrains a given number, or each element of an array, to fall within a a given range

@@ -1260,9 +1260,7 @@ export class Layer {
     vec1: VectorType,
     amount: number
   ): VectorType {
-    return vec1.map(
-      (el: number | undefined) => (el ?? 0) * amount
-    ) as VectorType;
+    return vec1;
   }
   /**
    * Divides a vector by a given scalar amount
@@ -1273,9 +1271,7 @@ export class Layer {
     vec1: VectorType,
     amount: number
   ): VectorType {
-    return vec1.map(
-      (el: number | undefined) => (el ?? 0) / amount
-    ) as VectorType;
+    return vec1;
   }
   /**
    * Constrains a given number, or each element of an array, to fall within a a given range

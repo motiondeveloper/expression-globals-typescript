@@ -379,7 +379,7 @@ export class Property<PropertyValueType extends Value> {
   ) {}
 }
 
-export class PathProperty<T> extends Property<T> {
+export class PathProperty extends Property<PathValue> {
   /**
    * Creates a path object from a set of points and tangents.
    * @param points An array of number pair arrays representing x,y coordinates of the path points. The array length must be at least 1, and can be of any greater length.

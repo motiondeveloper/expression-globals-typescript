@@ -469,7 +469,7 @@ export class PathProperty extends Property<PathValue> {
   normalOnPath(percentage?: number, time?: number): Vector2D {
     return [0, 0];
   }
-  constructor(value: T) {
+  constructor(value: PathValue = {}) {
     super(value);
   }
 }

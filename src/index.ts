@@ -248,7 +248,10 @@ export class Property<PropertyValueType extends Value> {
    * `"continue"`: Does not repeat the specified segment, but continues to animate a property based on the velocity at the first or last keyframe.
    * @param numKeyframes determines what segment is looped: The segment looped is the portion of the layer from the first keyframe to the numKeyframes+1 keyframe. The default value of 0 means that all keyframes loop
    */
-  loopIn(type: loopType = "cycle", numKeyframes: number = 0): Value {
+  loopIn(
+    type: loopType = "cycle",
+    numKeyframes: number = 0
+  ): PropertyValueType {
     return this.value;
   }
   /**
@@ -259,7 +262,10 @@ export class Property<PropertyValueType extends Value> {
    * `"continue"`: Does not repeat the specified segment, but continues to animate a property based on the velocity at the first or last keyframe.
    * @param numKeyframes determines what segment is looped: The segment looped is the portion of the layer from the last keyframe to the `thisProperty.numKeys - numKeyframes` keyframe. The default value of 0 means that all keyframes loop
    */
-  loopOut(type: loopType = "cycle", numKeyframes: number = 0): Value {
+  loopOut(
+    type: loopType = "cycle",
+    numKeyframes: number = 0
+  ): PropertyValueType {
     return this.value;
   }
   /**
@@ -270,7 +276,10 @@ export class Property<PropertyValueType extends Value> {
    * `"continue"`: Does not repeat the specified segment, but continues to animate a property based on the velocity at the first or last keyframe.
    * @param duration The number of composition seconds in a segment to loop; the specified range is measured from the first keyframe
    */
-  loopInDuration(type: loopType = "cycle", duration: number = 0): Value {
+  loopInDuration(
+    type: loopType = "cycle",
+    duration: number = 0
+  ): PropertyValueType {
     return this.value;
   }
   /**
@@ -281,7 +290,10 @@ export class Property<PropertyValueType extends Value> {
    * `"continue"`: Does not repeat the specified segment, but continues to animate a property based on the velocity at the first or last keyframe.
    * @param duration The number of composition seconds in a segment to loop; the specified range is measured from the last keyframe backwards.
    */
-  loopOutDuration(type: loopType = "cycle", duration: number = 0): Value {
+  loopOutDuration(
+    type: loopType = "cycle",
+    duration: number = 0
+  ): PropertyValueType {
     return this.value;
   }
   /**
@@ -345,7 +357,7 @@ export class Property<PropertyValueType extends Value> {
     octaves: number = 1,
     amp_mult: number = 0.5,
     time: number = thisLayer.time
-  ): Value {
+  ): PropertyValueType {
     return this.value;
   }
   /**
@@ -357,7 +369,7 @@ export class Property<PropertyValueType extends Value> {
     width: number = 0.2,
     samples: number = 5,
     time: number = thisLayer.time
-  ): Value {
+  ): PropertyValueType {
     return this.value;
   }
 

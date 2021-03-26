@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 :root {
   --navy: #282c35;
   --black: #21242b;
@@ -10,6 +11,8 @@
   --blue: #5daee6;
   --red: #e36a79;
   --purple: #c774e8;
+
+  --leading: 1.5;
 
   --color-background: var(--black);
   --color-text: var(--white);
@@ -24,12 +27,12 @@
   --color-comment-tag-text: var(--grey);
   --color-code-background: rgba(0, 0, 0, 0.04);
   --color-ts: var(--purple);
-  --color-ts-interface: var(--green);
+  --color-ts-interface: var(--yellow);
   --color-ts-enum: var(--tan);
   --color-ts-class: var(--lightGrey);
   --color-ts-private: var(--grey);
-  --color-toolbar: var(--white);
-  --color-toolbar-text: var(--navy);
+  --color-toolbar: var(--navy);
+  --color-toolbar-text: var(--white);
 }
 
 /*! normalize.css v1.1.3 | MIT License | git.io/normalize */
@@ -93,7 +96,7 @@ html {
   /* 2 */
   -webkit-text-size-adjust: 100%;
   /* 2 */
-  font-family: "Inter", sans-serif;
+  font-family: sans-serif;
 }
 
 /**
@@ -1837,7 +1840,7 @@ ul.tsd-descriptions > li > :last-child > :last-child > :last-child,
 }
 body {
   background: var(--color-background);
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   color: var(--color-text);
 }
@@ -1875,7 +1878,7 @@ blockquote {
 }
 
 .tsd-typography {
-  line-height: 1.333em;
+  line-height: var(--leading);
 }
 .tsd-typography ul {
   list-style: square;
@@ -2098,7 +2101,7 @@ dl.tsd-comment-tags p {
 
 .tsd-panel.tsd-comment .lead {
   font-size: 1.1em;
-  line-height: 1.333em;
+  line-height: var(--leading);
   margin-bottom: 2em;
 }
 .tsd-panel.tsd-comment .lead:last-child {
@@ -2185,7 +2188,7 @@ footer .tsd-legend {
   padding: 0;
   font-size: 16px;
   list-style: none;
-  line-height: 1.333em;
+  line-height: var(--leading);
   vertical-align: top;
 }
 @media (max-width: 900px) {
@@ -2198,7 +2201,13 @@ footer .tsd-legend {
   list-style: square;
   padding: 0 0 0 20px;
   margin: 0;
+  margin-top: 8px;
 }
+
+.tsd-hierarchy li {
+  margin-bottom: 4px;
+}
+
 .tsd-hierarchy .target {
   font-weight: bold;
 }
@@ -2209,6 +2218,11 @@ footer .tsd-legend {
 .tsd-index-panel .tsd-index-section {
   margin-bottom: 30px !important;
 }
+
+.tsd-index-panel .tsd-index-section li {
+  margin-bottom: 8px;
+}
+
 .tsd-index-panel h3 {
   margin: 0 -20px 10px -20px;
   padding: 0 20px 10px 20px;
@@ -2227,7 +2241,7 @@ footer .tsd-legend {
   column-gap: 20px;
   padding: 0;
   list-style: none;
-  line-height: 1.333em;
+  line-height: var(--leading);
 }
 @media (max-width: 900px) {
   .tsd-index-panel ul.tsd-index-list {
@@ -2345,6 +2359,7 @@ footer .tsd-legend {
 }
 .tsd-navigation li {
   padding: 0;
+  padding-top: 8px;
 }
 
 .tsd-navigation.primary {
@@ -2450,6 +2465,7 @@ footer .tsd-legend {
 .tsd-panel {
   margin: 20px 0;
   padding: 20px;
+  border-radius: 8px;
   background-color: var(--color-panel);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
 }

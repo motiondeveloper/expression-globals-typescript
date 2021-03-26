@@ -5,8 +5,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && docs",
     "test": "echo \"Error: no test specified\"",
+    "docs": "typedoc --name 'AE Expressions'  --readme none --out docs src/index.ts",
     "release": "npm run build && np"
   },
   "devDependencies": {
@@ -26,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/timhaywood/expression-globals-typescript/issues"
   },
-  "homepage": "https://github.com/timhaywood/expression-globals-typescript#readme"
+  "homepage": "https://github.com/timhaywood/expression-globals-typescript#readme",
+  "dependencies": {
+    "typedoc": "^0.20.34"
+  }
 }

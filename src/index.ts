@@ -1,7 +1,7 @@
 export type Points = Vector2D[];
-export type Vector = [number, number, number?];
 export type Vector2D = [number, number];
 export type Vector3D = [number, number, number];
+export type Vector = Vector2D | Vector3D;
 export type Color = [number, number, number, number];
 export interface PathValue {}
 
@@ -12,11 +12,11 @@ export type SourceData = any[];
 /**
  * Keyframe objects, which can be accessed via the property method `property.key()`
  */
-export class Key {
+export class Key<ValueType extends Value> {
   /**
    * The value of the keyframe
    */
-  readonly value: Value = "key value";
+  readonly value: ValueType;
   /**
    * The location of the keyframe in time
    */
@@ -25,6 +25,10 @@ export class Key {
    * The index of the keyframe, e.g. The `1`st keyframe on the property. Starts from 0.
    */
   readonly index: number = 1;
+
+  constructor(keyValue: ValueType) {
+    this.value = keyValue;
+  }
 }
 
 export class Project {
@@ -166,10 +170,10 @@ export class Comp {
    * @param relIndex Used when a layer is provided for the first input, the relative index from the given Layer
    * @returns The requested Layer object
    */
-  layer<T extends number | string | Layer>(
-    indexOrOtherLayer: T,
-    relIndex?: T extends Layer ? number : undefined
-  ): Layer {
+  layer(index: number): Layer;
+  layer(name: string): Layer;
+  layer(otherLayer: Layer, relativeIndex: number): Layer;
+  layer(indexOrOtherLayer: number | string | Layer, relativeIndex?: number) {
     return thisLayer;
   }
 }
@@ -201,7 +205,7 @@ export type Value =
   | Color
   | PathValue;
 
-class Property<PropertyValueType extends Value> {
+export class Property<PropertyValueType extends Value> {
   /**
    * The number of keyframes on the property
    */
@@ -214,15 +218,15 @@ class Property<PropertyValueType extends Value> {
    * @returns The keyframe at the specified index on the property
    * @param index The index of the keyframe to return (e.g. the `1`st keyframe)
    */
-  key(index: number): Key {
-    return new Key();
+  key(index: number): Key<PropertyValueType> {
+    return new Key(this.value);
   }
   /**
    * @returns The marker that is nearest in time to `t`
    * @param t Time value to get the marker closest to
    */
-  nearestKey(time: number): Key {
-    return new Key();
+  nearestKey(time: number): Key<PropertyValueType> {
+    return new Key(this.value);
   }
   /**
    * @returns The group of properties (`PropertyGroup` object) relative to the property of which the expression is written
@@ -244,7 +248,10 @@ class Property<PropertyValueType extends Value> {
    * `"continue"`: Does not repeat the specified segment, but continues to animate a property based on the velocity at the first or last keyframe.
    * @param numKeyframes determines what segment is looped: The segment looped is the portion of the layer from the first keyframe to the numKeyframes+1 keyframe. The default value of 0 means that all keyframes loop
    */
-  loopIn(type: loopType = "cycle", numKeyframes: number = 0): Value {
+  loopIn(
+    type: loopType = "cycle",
+    numKeyframes: number = 0
+  ): PropertyValueType {
     return this.value;
   }
   /**
@@ -255,7 +262,10 @@ class Property<PropertyValueType extends Value> {
    * `"continue"`: Does not repeat the specified segment, but continues to animate a property based on the velocity at the first or last keyframe.
    * @param numKeyframes determines what segment is looped: The segment looped is the portion of the layer from the last keyframe to the `thisProperty.numKeys - numKeyframes` keyframe. The default value of 0 means that all keyframes loop
    */
-  loopOut(type: loopType = "cycle", numKeyframes: number = 0): Value {
+  loopOut(
+    type: loopType = "cycle",
+    numKeyframes: number = 0
+  ): PropertyValueType {
     return this.value;
   }
   /**
@@ -266,7 +276,10 @@ class Property<PropertyValueType extends Value> {
    * `"continue"`: Does not repeat the specified segment, but continues to animate a property based on the velocity at the first or last keyframe.
    * @param duration The number of composition seconds in a segment to loop; the specified range is measured from the first keyframe
    */
-  loopInDuration(type: loopType = "cycle", duration: number = 0): Value {
+  loopInDuration(
+    type: loopType = "cycle",
+    duration: number = 0
+  ): PropertyValueType {
     return this.value;
   }
   /**
@@ -277,7 +290,10 @@ class Property<PropertyValueType extends Value> {
    * `"continue"`: Does not repeat the specified segment, but continues to animate a property based on the velocity at the first or last keyframe.
    * @param duration The number of composition seconds in a segment to loop; the specified range is measured from the last keyframe backwards.
    */
-  loopOutDuration(type: loopType = "cycle", duration: number = 0): Value {
+  loopOutDuration(
+    type: loopType = "cycle",
+    duration: number = 0
+  ): PropertyValueType {
     return this.value;
   }
   /**
@@ -324,6 +340,7 @@ class Property<PropertyValueType extends Value> {
     amp_mult: number = 0.5,
     time: number = thisLayer.time
   ): PropertyValueType {
+    const som = freq + amp + octaves + amp_mult + time;
     return this.value;
   }
   /**
@@ -340,7 +357,7 @@ class Property<PropertyValueType extends Value> {
     octaves: number = 1,
     amp_mult: number = 0.5,
     time: number = thisLayer.time
-  ): Value {
+  ): PropertyValueType {
     return this.value;
   }
   /**
@@ -352,7 +369,7 @@ class Property<PropertyValueType extends Value> {
     width: number = 0.2,
     samples: number = 5,
     time: number = thisLayer.time
-  ): Value {
+  ): PropertyValueType {
     return this.value;
   }
 
@@ -362,7 +379,7 @@ class Property<PropertyValueType extends Value> {
   ) {}
 }
 
-export class PathProperty<T> extends Property<T> {
+export class PathProperty extends Property<PathValue> {
   /**
    * Creates a path object from a set of points and tangents.
    * @param points An array of number pair arrays representing x,y coordinates of the path points. The array length must be at least 1, and can be of any greater length.
@@ -452,7 +469,7 @@ export class PathProperty<T> extends Property<T> {
   normalOnPath(percentage?: number, time?: number): Vector2D {
     return [0, 0];
   }
-  constructor(value: T) {
+  constructor(value: PathValue = {}) {
     super(value);
   }
 }
@@ -992,7 +1009,10 @@ export class Layer {
    * @param time The time to sample the vector
    * @returns The vector in the composition space
    */
-  toComp(vec: Vector, time: number = this.time): Vector {
+  toComp<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
   /**
@@ -1002,7 +1022,10 @@ export class Layer {
    * @param time The time to sample the vector
    * @returns The vector in the layer's space
    */
-  fromComp(vec: Vector, time: number = this.time): Vector {
+  fromComp<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
   /**
@@ -1012,19 +1035,34 @@ export class Layer {
    * @param time The time to sample the number
    * @returns The vector in world space
    */
-  toWorld(vec: Vector, time: number = this.time): Vector {
+  toWorld<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
-  toCompVec(vec: Vector, time: number = this.time): Vector {
+  toCompVec<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
-  fromCompVec(vec: Vector, time: number = this.time): Vector {
+  fromCompVec<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
-  toWorldVec(vec: Vector, time: number = this.time): Vector {
+  toWorldVec<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
-  fromWorldVec(vec: Vector, time: number = this.time): Vector {
+  fromWorldVec<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
   /**
@@ -1034,7 +1072,10 @@ export class Layer {
    * @param time The time to sample the number
    * @returns The vector in on the layers surface space
    */
-  fromCompToSurface(vec: Vector, time: number = this.time): Vector {
+  fromCompToSurface<VectorType extends Vector | Vector2D | Vector3D>(
+    vec: VectorType,
+    time: number = this.time
+  ): VectorType {
     return vec;
   }
   /**
@@ -1207,36 +1248,42 @@ export class Layer {
   /**
    * Adds two vectors
    */
-  add(vec1: Vector, vec2: Vector): Vector {
-    const maxLength = Math.max(vec1.length, vec2.length);
-    return new Array(maxLength).map((_, index) => {
-      return (vec1[index] ?? 0) + (vec2[index] ?? 0);
-    }) as Vector;
+  add<VectorType extends Vector | Vector2D | Vector3D>(
+    vec1: VectorType,
+    vec2: VectorType
+  ): VectorType {
+    return vec2;
   }
   /**
    * Subtracts two vectors
    */
-  sub(vec1: Vector, vec2: Vector): Vector {
-    const maxLength = Math.max(vec1.length, vec2.length);
-    return new Array(maxLength).map((_, index) => {
-      return (vec1[index] ?? 0) - (vec2[index] ?? 0);
-    }) as Vector;
+  sub<VectorType extends Vector | Vector2D | Vector3D>(
+    vec1: VectorType,
+    vec2: VectorType
+  ) {
+    return vec1;
   }
   /**
    * Multiplies a vector by a given scalar amount
    * @param vec1 The vector to multiply
    * @param amount The amount to multiply by
    */
-  mul(vec1: Vector, amount: number): Vector {
-    return vec1.map((el) => (el ?? 0) * amount) as Vector;
+  mul<VectorType extends Vector | Vector2D | Vector3D>(
+    vec1: VectorType,
+    amount: number
+  ): VectorType {
+    return vec1;
   }
   /**
    * Divides a vector by a given scalar amount
    * @param vec1 The vector to divide
    * @param amount The amount to divide by
    */
-  div(vec1: Vector, amount: number): Vector {
-    return vec1.map((el) => (el ?? 0) / amount) as Vector;
+  div<VectorType extends Vector | Vector2D | Vector3D>(
+    vec1: VectorType,
+    amount: number
+  ): VectorType {
+    return vec1;
   }
   /**
    * Constrains a given number, or each element of an array, to fall within a a given range

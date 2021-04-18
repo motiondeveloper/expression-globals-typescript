@@ -92,6 +92,14 @@ export class MarkerKey {
    * Whether the marker represents a protected region
    */
   readonly protectedRegion: boolean = false;
+  /**
+   * The location of the marker in time
+   */
+  readonly time: number = 0;
+  /**
+   * The index of the marker
+   */
+  readonly index: number = 1;
 }
 
 export class MarkerProperty {

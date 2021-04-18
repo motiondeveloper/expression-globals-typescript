@@ -129,6 +129,10 @@ export class Comp {
    */
   readonly activeCamera: Camera = new Camera();
   /**
+   * The marker property group object
+   */
+  readonly marker?: MarkerProperty = new MarkerProperty();
+  /**
    * The composition width in pixels
    */
   readonly width: number = 1920;

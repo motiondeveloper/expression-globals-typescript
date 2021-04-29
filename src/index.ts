@@ -92,6 +92,14 @@ export class MarkerKey {
    * Whether the marker represents a protected region
    */
   readonly protectedRegion: boolean = false;
+  /**
+   * The location of the marker in time
+   */
+  readonly time: number = 0;
+  /**
+   * The index of the marker
+   */
+  readonly index: number = 1;
 }
 
 export class MarkerProperty {
@@ -128,6 +136,10 @@ export class Comp {
    * The Camera object for the camera through which the composition is rendered at the current frame. This camera is not necessarily the camera through which you are looking in the Composition panel.
    */
   readonly activeCamera: Camera = new Camera();
+  /**
+   * The marker property group object
+   */
+  readonly marker?: MarkerProperty = new MarkerProperty();
   /**
    * The composition width in pixels
    */

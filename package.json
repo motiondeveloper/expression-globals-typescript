@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc && docs",
+    "build": "tsc && npm run docs",
     "test": "echo \"Error: no test specified\"",
     "docs": "typedoc --name 'AE Expressions' --theme docs-theme/ --readme none --out docs src/index.ts",
     "release": "npm run build && np"

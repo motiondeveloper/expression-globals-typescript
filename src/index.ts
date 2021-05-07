@@ -1005,7 +1005,7 @@ export class Layer {
   /**
    * The transform property group object
    */
-  readonly transform?: Transform = new Transform();
+  readonly transform: Transform = new Transform();
   /**
    * The text property group object
    */

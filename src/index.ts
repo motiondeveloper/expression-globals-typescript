@@ -735,6 +735,13 @@ export class SourceText extends Property<string> {
   getStyleAt(characterIndex: number, sampleTime: number = thisLayer.time) {
     return this.style;
   }
+  /**
+   * Used to create a new style object, rather than referencing and modifying an existing one.
+   * @returns An empty style object
+   */
+  createStyle() {
+    return new TextStyle();
+  }
 }
 
 export class TextPathOptions extends PropertyGroup {

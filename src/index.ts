@@ -957,7 +957,7 @@ export class Layer {
   /**
    * The parent Layer object of the layer, if it has one
    */
-  readonly parent?: Layer | Light | Camera = thisLayer;
+  readonly parent?: Layer | Light | Camera = new Layer();
   /**
    * Whether the layer has a parent layer
    */

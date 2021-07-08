@@ -186,7 +186,7 @@ export class Comp {
   layer(name: string): Layer;
   layer(otherLayer: Layer, relativeIndex: number): Layer;
   layer(indexOrOtherLayer: number | string | Layer, relativeIndex?: number) {
-    return thisLayer;
+    return new Layer();
   }
 }
 
@@ -350,7 +350,7 @@ export class Property<PropertyValueType extends Value> {
     amp: number,
     octaves: number = 1,
     amp_mult: number = 0.5,
-    time: number = thisLayer.time
+    time: number = new Layer().time
   ): PropertyValueType {
     const som = freq + amp + octaves + amp_mult + time;
     return this.value;
@@ -368,7 +368,7 @@ export class Property<PropertyValueType extends Value> {
     amp: number,
     octaves: number = 1,
     amp_mult: number = 0.5,
-    time: number = thisLayer.time
+    time: number = new Layer().time
   ): PropertyValueType {
     return this.value;
   }
@@ -380,7 +380,7 @@ export class Property<PropertyValueType extends Value> {
   smooth(
     width: number = 0.2,
     samples: number = 5,
-    time: number = thisLayer.time
+    time: number = new Layer().time
   ): PropertyValueType {
     return this.value;
   }
@@ -422,7 +422,7 @@ export class PathProperty extends Property<PathValue> {
    * Retrieves the points array for a path
    * @param time The time at which to sample the path
    */
-  points(time: number = thisLayer.time): Points {
+  points(time: number = new Layer().time): Points {
     return [
       [0, 0],
       [0, 0],
@@ -461,7 +461,7 @@ export class PathProperty extends Property<PathValue> {
    */
   pointOnPath(
     percentage: number = 0.5,
-    time: number = thisLayer.time
+    time: number = new Layer().time
   ): Vector2D {
     return [0, 0];
   }
@@ -732,7 +732,7 @@ export class SourceText extends Property<string> {
    * @param characterIndex Which character to get the style at
    * @param sampleTime The time to get the style at, defaulting to the current time
    */
-  getStyleAt(characterIndex: number, sampleTime: number = thisLayer.time) {
+  getStyleAt(characterIndex: number, sampleTime: number = new Layer().time) {
     return this.style;
   }
   /**
@@ -1478,8 +1478,6 @@ export class Layer {
     return [1, 1, 1, 1];
   }
 }
-
-const thisLayer = new Layer();
 
 export class Footage {
   /**

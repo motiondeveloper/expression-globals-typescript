@@ -218,6 +218,12 @@ export type Value =
   | PathValue;
 
 export class Property<PropertyValueType extends Value> {
+
+  constructor(
+    readonly value: PropertyValueType,
+    readonly name: string = "Property name"
+  ) {}
+
   /**
    * The number of keyframes on the property
    */
@@ -384,11 +390,6 @@ export class Property<PropertyValueType extends Value> {
   ): PropertyValueType {
     return this.value;
   }
-
-  constructor(
-    readonly value: PropertyValueType,
-    readonly name: string = "Property name"
-  ) {}
 }
 
 export class PathProperty extends Property<PathValue> {

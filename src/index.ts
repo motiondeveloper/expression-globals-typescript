@@ -219,10 +219,23 @@ export type Value =
 
 export class Property<PropertyValueType extends Value> {
 
+  /**
+   * The temporal velocity value at the current time. For spatial properties, such as Position, it returns the tangent vector value. The result is the same dimension as the property.
+   */
+  readonly velocity: PropertyValueType;
+
+  /**
+    * A 1D, positive speed value equal to the speed at which the property is changing at the default time. This element can be used only for spatial properties.
+    */
+  readonly speed: PropertyValueType;
+  
   constructor(
     readonly value: PropertyValueType,
     readonly name: string = "Property name"
-  ) {}
+  ) {
+   this.velocity = this.value;
+   this.speed = this.value;
+  }
 
   /**
    * The number of keyframes on the property
@@ -314,10 +327,7 @@ export class Property<PropertyValueType extends Value> {
   ): PropertyValueType {
     return this.value;
   }
-  /**
-   * The temporal velocity value at the current time. For spatial properties, such as Position, it returns the tangent vector value. The result is the same dimension as the property.
-   */
-  readonly velocity: PropertyValueType = this.value;
+
   /**
    * @returns The temporal velocity value at the specified time. For spatial properties, such as Position, it returns the tangent vector value. The result is the same dimension as the property.
    * @param time The composition time in seconds to get the velocity at
@@ -325,10 +335,6 @@ export class Property<PropertyValueType extends Value> {
   velocityAtTime(time: number): PropertyValueType {
     return this.velocity;
   }
-  /**
-   * A 1D, positive speed value equal to the speed at which the property is changing at the default time. This element can be used only for spatial properties.
-   */
-  readonly speed: PropertyValueType = this.value;
   /**
    * @returns  A 1D, positive speed value equal to the speed at which the property is changing at the specified time. This element can be used only for spatial properties.
    * @param time The composition time in seconds to get the speed at

@@ -218,23 +218,22 @@ export type Value =
   | PathValue;
 
 export class Property<PropertyValueType extends Value> {
-
   /**
    * The temporal velocity value at the current time. For spatial properties, such as Position, it returns the tangent vector value. The result is the same dimension as the property.
    */
   readonly velocity: PropertyValueType;
 
   /**
-    * A 1D, positive speed value equal to the speed at which the property is changing at the default time. This element can be used only for spatial properties.
-    */
+   * A 1D, positive speed value equal to the speed at which the property is changing at the default time. This element can be used only for spatial properties.
+   */
   readonly speed: PropertyValueType;
-  
+
   constructor(
     readonly value: PropertyValueType,
     readonly name: string = "Property name"
   ) {
-   this.velocity = this.value;
-   this.speed = this.value;
+    this.velocity = this.value;
+    this.speed = this.value;
   }
 
   /**
@@ -362,7 +361,7 @@ export class Property<PropertyValueType extends Value> {
     amp: number,
     octaves: number = 1,
     amp_mult: number = 0.5,
-    time: number = new Layer().time
+    time: number = 0
   ): PropertyValueType {
     const som = freq + amp + octaves + amp_mult + time;
     return this.value;
@@ -380,7 +379,7 @@ export class Property<PropertyValueType extends Value> {
     amp: number,
     octaves: number = 1,
     amp_mult: number = 0.5,
-    time: number = new Layer().time
+    time: number = 0
   ): PropertyValueType {
     return this.value;
   }
@@ -392,7 +391,7 @@ export class Property<PropertyValueType extends Value> {
   smooth(
     width: number = 0.2,
     samples: number = 5,
-    time: number = new Layer().time
+    time: number = 0
   ): PropertyValueType {
     return this.value;
   }
@@ -429,7 +428,7 @@ export class PathProperty extends Property<PathValue> {
    * Retrieves the points array for a path
    * @param time The time at which to sample the path
    */
-  points(time: number = new Layer().time): Points {
+  points(time: number = 0): Points {
     return [
       [0, 0],
       [0, 0],
@@ -466,10 +465,7 @@ export class PathProperty extends Property<PathValue> {
    * @param percentage How far along the path to get the point, between 0 and 1.
    * @param time The time at which to sample the path
    */
-  pointOnPath(
-    percentage: number = 0.5,
-    time: number = new Layer().time
-  ): Vector2D {
+  pointOnPath(percentage: number = 0.5, time: number = 0): Vector2D {
     return [0, 0];
   }
   /**
@@ -739,7 +735,7 @@ export class SourceText extends Property<string> {
    * @param characterIndex Which character to get the style at
    * @param sampleTime The time to get the style at, defaulting to the current time
    */
-  getStyleAt(characterIndex: number, sampleTime: number = new Layer().time) {
+  getStyleAt(characterIndex: number, sampleTime: number = 0) {
     return this.style;
   }
   /**
@@ -964,7 +960,7 @@ export class Layer {
   /**
    * The parent Layer object of the layer, if it has one
    */
-  readonly parent?: Layer | Light | Camera = new Layer();
+  readonly parent?: Layer | Light | Camera = undefined;
   /**
    * Whether the layer has a parent layer
    */

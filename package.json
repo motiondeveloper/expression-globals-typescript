@@ -8,7 +8,7 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\"",
     "docs": "typedoc --name 'AE Expressions' --theme docs-theme/ --readme none --out docs src/index.ts",
-    "release": "npm run docs && npm run build && np"
+    "release": "npm run build && np"
   },
   "devDependencies": {
     "typescript": "^4.2.4"

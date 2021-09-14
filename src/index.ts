@@ -3,6 +3,21 @@ export type Vector2D = [x: number, y: number];
 export type Vector3D = [x: number, y: number, z: number];
 export type Vector = Vector2D | Vector3D;
 export type Color = [r: number, g: number, b: number, a: number];
+export type NumericValue = number | number[] | Vector | Color;
+
+type MathReturn<
+  A extends NumericValue,
+  B extends NumericValue
+> = A extends number[]
+  ? Vector | Color | number[]
+  : B extends number[]
+  ? Vector | Color | number[]
+  : A extends number
+  ? B extends number
+    ? number
+    : Error
+  : Error;
+
 export interface PathValue {}
 
 export type SourceData = any[];
@@ -1267,30 +1282,31 @@ export class Layer {
   ): string {
     return "0000";
   }
+
   /**
    * Adds two vectors
    */
-  add<VectorType extends Vector | Vector2D | Vector3D>(
-    vec1: VectorType,
-    vec2: VectorType
-  ): VectorType {
-    return vec2;
+  add<A extends NumericValue, B extends NumericValue>(
+    a: A,
+    b: B
+  ): MathReturn<A, B> {
+    return a as any;
   }
   /**
    * Subtracts two vectors
    */
-  sub<VectorType extends Vector | Vector2D | Vector3D>(
-    vec1: VectorType,
-    vec2: VectorType
-  ) {
-    return vec1;
+  sub<A extends NumericValue, B extends NumericValue>(
+    a: A,
+    b: B
+  ): MathReturn<A, B> {
+    return a as any;
   }
   /**
    * Multiplies a vector by a given scalar amount
    * @param vec1 The vector to multiply
    * @param amount The amount to multiply by
    */
-  mul<VectorType extends Vector | Vector2D | Vector3D>(
+  mul<VectorType extends number | Vector | Vector2D | Vector3D>(
     vec1: VectorType,
     amount: number
   ): VectorType {
@@ -1301,7 +1317,7 @@ export class Layer {
    * @param vec1 The vector to divide
    * @param amount The amount to divide by
    */
-  div<VectorType extends Vector | Vector2D | Vector3D>(
+  div<VectorType extends number | Vector | Vector2D | Vector3D>(
     vec1: VectorType,
     amount: number
   ): VectorType {

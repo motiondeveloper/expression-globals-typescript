@@ -9,9 +9,9 @@ type MathReturn<
   A extends NumericValue,
   B extends NumericValue
 > = A extends number[]
-  ? Vector | Color | number[]
+  ? A
   : B extends number[]
-  ? Vector | Color | number[]
+  ? B
   : A extends number
   ? B extends number
     ? number

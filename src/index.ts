@@ -837,18 +837,21 @@ export class SourceRect {
   readonly height: number = 100;
 }
 
-export class Effect {
+export interface Effect {
   /**
    * Returns true if the effect is turned on
    */
-  active: boolean = true;
+  active: boolean;
   /**
    * @returns A property within an effect, e.g. `"Slider"`
    * @param nameOrIndex The name or index of the property to retrieve
    */
-  param(nameOrIndex: string | number): Property<string> {
-    return new Property<string>("Effect Param");
-  }
+  param(nameOrIndex: string | number): Property<string>;
+  /**
+   * @returns A property within an effect, e.g. `"Slider"`
+   * @param nameOrIndex The name or index of the property to retrieve
+   */
+  (nameOrIndex: string | number): Property<string>;
 }
 
 export class Mask {
@@ -1140,8 +1143,8 @@ export class Layer {
    * @param nameOrIndex The effect's name or index
    * @returns The first effect with the given name, or at the given index
    */
-  effect(nameOrIndex: number | string): Effect {
-    return new Effect();
+  effect(nameOrIndex: number | string) {
+    return effectCall;
   }
   /**
    * Get the mask on a layer with a given name or index.

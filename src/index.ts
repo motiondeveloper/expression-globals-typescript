@@ -851,6 +851,16 @@ export class Effect {
   }
 }
 
+// Duplicate declaration as an interface, to add a call
+// signature for effects. This enables layer.effect("")("") syntax
+export interface Effect {
+  /**
+   * @returns A property within an effect, e.g. `"Slider"`
+   * @param nameOrIndex The name or index of the property to retrieve
+   */
+  (nameOrIndex: string | number): Property<string>;
+}
+
 export class Mask {
   /**
    * The opacity value of a mask as a percentage.

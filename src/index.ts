@@ -593,7 +593,7 @@ export class TextStyle {
     return this;
   }
   /**
-   * Set the text content of a sourceText property, used when you need to return a `style` object *an* set the `value`
+   * Set the text content of a sourceText property, used when you need to return a `style` object *and* set the `value`
    * @param text The string to set
    */
   setText(text: string): TextStyle {

@@ -571,8 +571,10 @@ export class TextStyle {
   /**
    * Set the font size for a style
    * @param fontSize Font size in pixels
+   * @param s Start index
+   * @param n Number of characters
    */
-  setFontSize(fontSize: number): TextStyle {
+  setFontSize(fontSize: number, s?: number, n?: number): TextStyle {
     this.fontSize = fontSize;
     return this;
   }
@@ -583,8 +585,10 @@ export class TextStyle {
   /**
    * Set the font for a style
    * @param font The typeface to set
+   * @param s Start index
+   * @param n Number of characters
    */
-  setFont(font: string): TextStyle {
+  setFont(font: string, s?: number, n?: number): TextStyle {
     this.font = font;
     return this;
   }
@@ -601,8 +605,10 @@ export class TextStyle {
   isFauxBold: boolean = false;
   /**
    * Set the faux bold property for a style
+   * @param s Start index
+   * @param n Number of characters
    */
-  setFauxBold(isFauxBold: boolean): TextStyle {
+  setFauxBold(isFauxBold: boolean, s?: number, n?: number): TextStyle {
     this.isFauxBold = isFauxBold;
     return this;
   }
@@ -612,8 +618,10 @@ export class TextStyle {
   isFauxItalic: boolean = false;
   /**
    * Set the faux italic property for a style
+   * @param s Start index
+   * @param n Number of characters
    */
-  setFauxItalic(isFauxItalic: boolean): TextStyle {
+  setFauxItalic(isFauxItalic: boolean, s?: number, n?: number): TextStyle {
     this.isFauxItalic = isFauxItalic;
     return this;
   }
@@ -623,8 +631,10 @@ export class TextStyle {
   isAllCaps: boolean = false;
   /**
    * Set the all caps property for a style
+   * @param s Start index
+   * @param n Number of characters
    */
-  setAllCaps(isAllCaps: boolean): TextStyle {
+  setAllCaps(isAllCaps: boolean, s?: number, n?: number): TextStyle {
     this.isAllCaps = isAllCaps;
     return this;
   }
@@ -634,8 +644,10 @@ export class TextStyle {
   isSmallCaps: boolean = false;
   /**
    * Set the small caps property for a style
+   * @param s Start index
+   * @param n Number of characters
    */
-  setSmallCaps(isSmallCaps: boolean): TextStyle {
+  setSmallCaps(isSmallCaps: boolean, s?: number, n?: number): TextStyle {
     this.isSmallCaps = isSmallCaps;
     return this;
   }
@@ -645,8 +657,10 @@ export class TextStyle {
   tracking: number = 0;
   /**
    * Set the tracking style for a style
+   * @param s Start index
+   * @param n Number of characters
    */
-  setTracking(tracking: number): TextStyle {
+  setTracking(tracking: number, s?: number, n?: number): TextStyle {
     this.tracking = tracking;
     return this;
   }
@@ -656,8 +670,10 @@ export class TextStyle {
   leading: number = 60;
   /**
    * Set the leading value for a style
+   * @param s Start index
+   * @param n Number of characters
    */
-  setLeading(leading: number): TextStyle {
+  setLeading(leading: number, s?: number, n?: number): TextStyle {
     this.leading = leading;
     return this;
   }
@@ -667,9 +683,39 @@ export class TextStyle {
   autoLeading: boolean = false;
   /**
    * Set the auto leading property for a style
+   * @param s Start index
+   * @param n Number of characters
    */
-  setAutoLeading(autoLeading: boolean): TextStyle {
+  setAutoLeading(autoLeading: boolean, s?: number, n?: number): TextStyle {
     this.autoLeading = autoLeading;
+    return this;
+  }
+  baselineDirection: "default" | "rotated" | "tate-chuu-yoko" = "default";
+  /**
+   *
+   * @param s Start index
+   * @param n Number of characters
+   */
+  setBaselineDirection(
+    baselineDirection: typeof this.baselineDirection,
+    s?: number,
+    n?: number
+  ): TextStyle {
+    this.baselineDirection = baselineDirection;
+    return this;
+  }
+  baselineOption: "default" | "subscript" | "superscript" = "default";
+  /**
+   *
+   * @param s Start index
+   * @param n Number of characters
+   */
+  setBaselineOption(
+    baselineOption: typeof this.baselineOption,
+    s?: number,
+    n?: number
+  ): TextStyle {
+    this.baselineOption = baselineOption;
     return this;
   }
   /**
@@ -679,8 +725,10 @@ export class TextStyle {
   /**
    * Set the baseline shift value for a style
    * @param baselineShift The baseline shift to set
+   * @param s Start index
+   * @param n Number of characters
    */
-  setBaselineShift(baselineShift: number): TextStyle {
+  setBaselineShift(baselineShift: number, s?: number, n?: number): TextStyle {
     this.baselineShift = baselineShift;
     return this;
   }
@@ -690,8 +738,10 @@ export class TextStyle {
   applyFill: boolean = true;
   /**
    * Enable or disable the fill for a style
+   * @param s Start index
+   * @param n Number of characters
    */
-  setApplyFill(applyFill: boolean): TextStyle {
+  setApplyFill(applyFill: boolean, s?: number, n?: number): TextStyle {
     this.applyFill = applyFill;
     return this;
   }
@@ -702,8 +752,14 @@ export class TextStyle {
   /**
    * Set the fill color for a style
    * @param fillColor The color to set
+   * @param s Start index
+   * @param n Number of characters
    */
-  setFillColor(fillColor: [number, number, number]): TextStyle {
+  setFillColor(
+    fillColor: [number, number, number],
+    s?: number,
+    n?: number
+  ): TextStyle {
     this.fillColor = fillColor;
     return this;
   }
@@ -713,8 +769,10 @@ export class TextStyle {
   applyStroke: boolean = false;
   /**
    * Enable or disable the stroke for a style
+   * @param s Start index
+   * @param n Number of characters
    */
-  setApplyStroke(applyStroke: boolean): TextStyle {
+  setApplyStroke(applyStroke: boolean, s?: number, n?: number): TextStyle {
     this.applyStroke = applyStroke;
     return this;
   }
@@ -725,8 +783,14 @@ export class TextStyle {
   /**
    * Set the stroke colour for a style
    * @param strokeColor The color to set
+   * @param s Start index
+   * @param n Number of characters
    */
-  setStrokeColor(strokeColor: [number, number, number]): TextStyle {
+  setStrokeColor(
+    strokeColor: [number, number, number],
+    s?: number,
+    n?: number
+  ): TextStyle {
     this.strokeColor = strokeColor;
     return this;
   }
@@ -737,9 +801,111 @@ export class TextStyle {
   /**
    * Set the stroke width for a style
    * @param strokeWidth The stroke width to set
+   * @param s Start index
+   * @param n Number of characters
    */
-  setStrokeWidth(strokeWidth: number): TextStyle {
+  setStrokeWidth(strokeWidth: number, s?: number, n?: number): TextStyle {
     this.strokeWidth = strokeWidth;
+    return this;
+  }
+  digitSet: "default" | "hindidigits" = "default";
+  /**
+   * @param s Start index
+   * @param n Number of characters
+   */
+  setDigitSet(
+    digitSet: typeof this.digitSet,
+    s?: number,
+    n?: number
+  ): TextStyle {
+    this.digitSet = digitSet;
+    return this;
+  }
+  horizontalScaling: number = 100;
+  /**
+   * @param s Start index
+   * @param n Number of characters
+   */
+  setHorizontalScaling(
+    horizontalScaling: number,
+    s?: number,
+    n?: number
+  ): TextStyle {
+    this.horizontalScaling = horizontalScaling;
+    return this;
+  }
+  verticalScaling: number = 100;
+  /**
+   * @param s Start index
+   * @param n Number of characters
+   */
+  setVerticalScaling(
+    verticalScaling: number,
+    s?: number,
+    n?: number
+  ): TextStyle {
+    this.verticalScaling = verticalScaling;
+    return this;
+  }
+  kerning: number = 0;
+  /**
+   * @param s Start index
+   * @param n Number of characters
+   */
+  setKerning(kerning: number, s?: number, n?: number): TextStyle {
+    this.kerning = kerning;
+    return this;
+  }
+  kerningType: "metrics" | "optical" = "metrics";
+  /**
+   * @param s Start index
+   * @param n Number of characters
+   */
+  setKerningType(
+    kerningType: typeof this.kerningType,
+    s?: number,
+    n?: number
+  ): TextStyle {
+    this.kerningType = kerningType;
+    return this;
+  }
+  isLigature: boolean = false;
+  /**
+   * @param s Start index
+   * @param n Number of characters
+   */
+  setLigature(ligature: boolean, s?: number, n?: number): TextStyle {
+    this.isLigature = ligature;
+    return this;
+  }
+  lineJoin: "bevel" | "miter" | "round" = "miter";
+  /**
+   * @param s Start index
+   * @param n Number of characters
+   */
+  setLineJoin(
+    lineJoin: typeof this.lineJoin,
+    s?: number,
+    n?: number
+  ): TextStyle {
+    this.lineJoin = lineJoin;
+    return this;
+  }
+  /**
+   * Replaces the content between `s` and `n` with the given `content`, or if `s` and `n` aren't given replaces the entire string
+   * @param s Start index
+   * @param n Number of characters
+   */
+  replaceText(content: string, s?: number, n?: number): TextStyle {
+    return this;
+  }
+  tsume: number = 0;
+  /**
+   * @param s Start index
+   * @param n Number of characters
+   */
+  setTsume(tsume: number, s?: number, n?: number): TextStyle {
+    this.tsume = tsume;
     return this;
   }
 }

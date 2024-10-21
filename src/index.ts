@@ -697,7 +697,7 @@ export class TextStyle {
    * @param n Number of characters
    */
   setBaselineDirection(
-    baselineDirection: typeof this.baselineDirection,
+    baselineDirection: "default" | "rotated" | "tate-chuu-yoko",
     s?: number,
     n?: number
   ): TextStyle {
@@ -711,7 +711,7 @@ export class TextStyle {
    * @param n Number of characters
    */
   setBaselineOption(
-    baselineOption: typeof this.baselineOption,
+    baselineOption: "default" | "subscript" | "superscript",
     s?: number,
     n?: number
   ): TextStyle {
@@ -814,7 +814,7 @@ export class TextStyle {
    * @param n Number of characters
    */
   setDigitSet(
-    digitSet: typeof this.digitSet,
+    digitSet: "default" | "hindidigits",
     s?: number,
     n?: number
   ): TextStyle {
@@ -862,7 +862,7 @@ export class TextStyle {
    * @param n Number of characters
    */
   setKerningType(
-    kerningType: typeof this.kerningType,
+    kerningType: "metrics" | "optical",
     s?: number,
     n?: number
   ): TextStyle {
@@ -884,7 +884,7 @@ export class TextStyle {
    * @param n Number of characters
    */
   setLineJoin(
-    lineJoin: typeof this.lineJoin,
+    lineJoin: "bevel" | "miter" | "round",
     s?: number,
     n?: number
   ): TextStyle {

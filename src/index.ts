@@ -511,6 +511,10 @@ export class Transform extends PropertyGroup {
     super("Transform");
   }
   /**
+   * The opacity of the layer, as a percentage.
+   */
+  readonly opacity: Property<Number> = new Property(100, "Opacity");
+  /**
    * The anchor point value of the layer in the coordinate system of the layer (layer space).
    */
   readonly anchorPoint: Property<Vector> = new Property([0, 0], "Anchor Point");

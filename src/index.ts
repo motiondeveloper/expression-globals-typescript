@@ -908,6 +908,138 @@ export class TextStyle {
     this.tsume = tsume;
     return this;
   }
+  /**
+   * Text direction of the paragraph.
+   */
+  direction: "left-to-right" | "right-to-left" = "left-to-right";
+  /**
+   * Sets the text direction.
+   * @param direction The direction to set (e.g., "left-to-right", "right-to-left").
+   * @returns The current TextStyle instance.
+   */
+  setDirection(direction: "left-to-right" | "right-to-left"): TextStyle {
+    this.direction = direction;
+    return this;
+  }
+  /**
+   * Whether Every-Line Composer is enabled.
+   */
+  everyLineComposer: boolean = false;
+  /**
+   * Enables or disables the Every-Line Composer.
+   * @param isEnabled Whether to enable the Every-Line Composer.
+   * @returns The current TextStyle instance.
+   */
+  setEveryLineComposer(isEnabled: boolean): TextStyle {
+    this.everyLineComposer = isEnabled;
+    return this;
+  }
+  /**
+   * First line indent of the paragraph.
+   */
+  firstLineIndent: number = 0;
+  /**
+   * Sets the first line indent.
+   * @param indent The indent value for the first line.
+   * @returns The current TextStyle instance.
+   */
+  setFirstLineIndent(indent: number): TextStyle {
+    this.firstLineIndent = indent;
+    return this;
+  }
+  /**
+   * Justification of the paragraph.
+   */
+  justification: "alignLeft" | "alignCenter" | "alignRight" | "justifyFull" | "justifyLastLeft" | "justifyLastCenter" | "justifyLastRight" = "alignLeft";
+  /**
+   * Sets the justification of the paragraph.
+   * @param justification The justification to set (e.g., "alignLeft", "alignCenter", "alignRight", "justifyFull", "justifyLastLeft", "justifyLastCenter", "justifyLastRight").
+   * @returns The current TextStyle instance.
+   */
+  setJustification(
+    justification: "alignLeft" | "alignCenter" | "alignRight" | "justifyFull" | "justifyLastLeft" | "justifyLastCenter" | "justifyLastRight"
+  ): TextStyle {
+    this.justification = justification;
+    return this;
+  }
+  /**
+   * Leading type of the paragraph.
+   */
+  leadingType: "bottom-to-bottom" | "top-to-top" = "bottom-to-bottom";
+  /**
+   * Sets the leading type for the paragraph.
+   * @param leadingType The type of leading (e.g., "bottom-to-bottom", "top-to-top").
+   * @returns The current TextStyle instance.
+   */
+  setLeadingType(leadingType: "bottom-to-bottom" | "top-to-top"): TextStyle {
+    this.leadingType = leadingType;
+    return this;
+  }
+  /**
+   * Left margin of the paragraph.
+   */
+  leftMargin: number = 0;
+  /**
+   * Sets the left margin of the paragraph.
+   * @param margin The left margin value.
+   * @returns The current TextStyle instance.
+   */
+  setLeftMargin(margin: number): TextStyle {
+    this.leftMargin = margin;
+    return this;
+  }
+  /**
+   * Right margin of the paragraph.
+   */
+  rightMargin: number = 0;
+  /**
+   * Sets the right margin of the paragraph.
+   * @param margin The right margin value.
+   * @returns The current TextStyle instance.
+   */
+  setRightMargin(margin: number): TextStyle {
+    this.rightMargin = margin;
+    return this;
+  }
+  /**
+   * Space after the paragraph.
+   */
+  spaceAfter: number = 0;
+  /**
+   * Sets the space after the paragraph.
+   * @param space The space after the paragraph.
+   * @returns The current TextStyle instance.
+   */
+  setSpaceAfter(space: number): TextStyle {
+    this.spaceAfter = space;
+    return this;
+  }
+  /**
+   * Space before the paragraph.
+   */
+  spaceBefore: number = 0;
+  /**
+   * Sets the space before the paragraph.
+   * @param space The space before the paragraph.
+   * @returns The current TextStyle instance.
+   */
+  setSpaceBefore(space: number): TextStyle {
+    this.spaceBefore = space;
+    return this;
+  }
+  /**
+   * Whether hanging Roman punctuation is enabled.
+   */
+  hangingRomanPunctuation: boolean = false;
+  /**
+   * Enables or disables hanging Roman punctuation.
+   * @param isEnabled Whether to enable hanging Roman punctuation.
+   * @returns The current TextStyle instance.
+   */
+  setHangingRomanPunctuation(isEnabled: boolean): TextStyle {
+    this.hangingRomanPunctuation = isEnabled;
+    return this;
+  }
 }
 
 export class SourceText extends Property<string> {

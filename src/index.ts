@@ -18,7 +18,9 @@ type MathReturn<
     : Error
   : Error;
 
-export interface PathValue {}
+export interface PathValue {
+  className: "Path Object";
+}
 
 export type SourceData = any[];
 
@@ -431,7 +433,7 @@ export class PathProperty extends Property<PathValue> {
     outTangents: Points | [] = [],
     is_closed: boolean = true
   ): PathValue {
-    return points;
+    return {} as PathValue;
   }
   /**
    * @returns Whether a path is closed (the last point connected to the first)
@@ -499,7 +501,7 @@ export class PathProperty extends Property<PathValue> {
   normalOnPath(percentage?: number, time?: number): Vector2D {
     return [0, 0];
   }
-  constructor(value: PathValue = {}) {
+  constructor(value: PathValue = {} as PathValue) {
     super(value);
   }
 }
@@ -513,7 +515,7 @@ export class Transform extends PropertyGroup {
   /**
    * The opacity of the layer, as a percentage.
    */
-  readonly opacity: Property<Number> = new Property(100, "Opacity");
+  readonly opacity: Property<number> = new Property(100, "Opacity");
   /**
    * The anchor point value of the layer in the coordinate system of the layer (layer space).
    */

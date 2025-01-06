@@ -225,13 +225,9 @@ export class PropertyGroup {
 }
 
 export type Value =
+  | NumericValue
   | string
-  | number
   | boolean
-  | Vector
-  | Vector2D
-  | Vector3D
-  | Color
   | PathValue;
 
 export class Property<PropertyValueType extends Value> {
@@ -1488,7 +1484,7 @@ export class Layer {
    * @param vec1 The vector to multiply
    * @param amount The amount to multiply by
    */
-  mul<VectorType extends number | Vector | Vector2D | Vector3D>(
+  mul<VectorType extends NumericValue>(
     vec1: VectorType,
     amount: number
   ): VectorType {
@@ -1499,7 +1495,7 @@ export class Layer {
    * @param vec1 The vector to divide
    * @param amount The amount to divide by
    */
-  div<VectorType extends number | Vector | Vector2D | Vector3D>(
+  div<VectorType extends NumericValue>(
     vec1: VectorType,
     amount: number
   ): VectorType {
@@ -1511,7 +1507,7 @@ export class Layer {
    * @param limit1 Lower limit
    * @param limit2 Upper limit
    */
-  clamp<T extends number | number[]>(
+  clamp<T extends NumericValue>(
     value: T,
     limit1: number,
     limit2: number

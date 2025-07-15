@@ -1014,8 +1014,8 @@ export class Effect {
    * @returns A property within an effect, e.g. `"Slider"`
    * @param nameOrIndex The name or index of the property to retrieve
    */
-  param(nameOrIndex: string | number): Property<string> {
-    return new Property<string>("Effect Param");
+  param(nameOrIndex: string | number): Property<any> {
+    return new Property<any>("Effect Param");
   }
 }
 
@@ -1026,7 +1026,7 @@ export interface Effect {
    * @returns A property within an effect, e.g. `"Slider"`
    * @param nameOrIndex The name or index of the property to retrieve
    */
-  (nameOrIndex: string | number): Property<string>;
+  (nameOrIndex: string | number): Property<any>;
 }
 
 export class Mask {
